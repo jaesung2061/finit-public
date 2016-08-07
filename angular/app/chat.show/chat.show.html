@@ -1,0 +1,69 @@
+<md-content class="Page-Container Chat-App" ng-controller="ChatShowController" layout="column" layout-gt-md="row" flex>
+    <md-content flex layout="column" class="chat-col-left overflow-hidden">
+        <!--Show while chatroom is connecting-->
+        <div flex layout="row" layout-sm="column" layout-align="center center" ng-show="chatroom.readyState !== 2">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+
+        <i class="fa fa-times chat-leave-button md-color blue hover" ng-click="leaveRoom(chatroom)" ng-show="chatroom.readyState === 2" title="Exit Room"></i>
+
+        <!--Chat window-->
+        <div flex
+             layout-wrap class="chat-messages-container"
+             scroll-glue="chatroom && chatroom.readyState === 2 && allowAutoScroll"
+             auto-scroll-checks
+             dynamic-height="104"
+             ng-show="chatroom.readyState === 2">
+
+            <!--No message placeholder-->
+            <div layout="column" layout-align="center center" ng-if="chatroom.messages && chatroom.messages.length === 0" class="text-center">
+                <h2>{{chatroom.title}}</h2>
+
+                <h3 ng-if="chatroom.type === 'public'">
+                    <i class="fa fa-frown-o"></i> Looks like there is no activity here yet.
+                </h3>
+            </div>
+
+            <md-list chat-messages chatroom="chatroom"></md-list>
+        </div>
+
+        <!--Chat entry-->
+        <form flex layout="row" class="chat-entry-container" ng-show="chatroom.readyState === 2" ng-submit="sendMessage(chatroom)">
+            <md-button flex="5" ft-touchstart="toggleRight($event)" class="md-primary md-raised btn-toggle-sidenav" hide-gt-lg aria-label="Right Nav">
+                <i class="fa fa-bars"></i>
+                <i class="badge red" ng-show="chatroom.newPolls.length > 0">
+                    {{chatroom.newPolls.length}}
+                </i>
+            </md-button>
+
+            <md-button flex="5" ft-touchstart="openEmojisBottomSheet()" class="md-accent md-raised btn-toggle-sidenav" ng-hide="!$mdMedia('gt-md')" aria-label="Smiley">
+                <span class="emoji emoji-sizer" style="font-size:20px;background-image:url(https://2f58f2dbbe1008757c98-1defb3de6cf63492d8311f1b98c02297.ssl.cf5.rackcdn.com/1f600.png)"></span>
+            </md-button>
+
+            <md-button flex="5" ngf-select ngf-change="onFileSelect($files)" accept="image/*" class="md-raised md-accent btn-open-img-dialog" aria-label="Photo">
+                <i class="fa fa-photo"></i>
+            </md-button>
+
+            <input id="chat-message-input" type="text" ng-model="message" ng-change="onChatKeyPress($event)" placeholder="Message {{chatroom.title}}" autocomplete="off" maxlength="255" spellcheck="true">
+
+            <md-button flex="10" flex-sm="5" class="md-raised md-accent" type="submit" aria-label="Send Message">
+                <i class="fa fa-paper-plane"></i>
+                <span ng-if="$mdMedia('gt-sm')">Send</span>
+            </md-button>
+        </form>
+    </md-content>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-lg')">
+        <md-content ng-controller="ChatShowSidenavController">
+            <md-toolbar class="md-theme-light" layout="row" flex>
+                <h3 class="md-toolbar-tools">
+                    {{chatroom.title}}
+                </h3>
+                <span flex></span>
+            </md-toolbar>
+
+            <md-content ng-include="getPartial('chat.show', 'chat-sidebar')"></md-content>
+
+        </md-content><!--End Sidenav content wrapper-->
+    </md-sidenav><!--End Sidenav-->
+</md-content><!--End Page-->

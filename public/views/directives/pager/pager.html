@@ -1,0 +1,16 @@
+<ul class="pager" layout="row" layout-align="space-between center">
+    <li flex="20"
+        ng-click="pagerAction('previous')"
+        class="md-button md-raised {{theme || 'md-accent'}} previous"
+        ng-class="{'invisible': (metaData.current_page === 1)}">
+        <i class="fa fa-arrow-left"></i>
+        {{previous}}
+    </li>
+    <li flex="20"
+        ng-click="pagerAction('next')"
+        class="md-button md-raised {{theme || 'md-accent'}} next"
+        ng-class="{'invisible': (metaData.current_page >= metaData.last_page)}">
+        {{next}}
+        <i class="fa fa-arrow-right"></i>
+    </li>
+</ul>

@@ -1,0 +1,268 @@
+<!--DESKTOP-->
+<div class="Page-Container Profile desktop" ng-controller="UsersShowController" ng-if="$mdMedia('gt-md')">
+    <div layout="row" layout-wrap ng-show="initialized">
+        <div class="column-user-info" flex="30" flex-gt-lg="25">
+            <!--Profile Picture-->
+            <div style="position: relative;">
+                <img class="avatar img-responsive center-block" ng-src="{{user.picture_lg}}" alt>
+                <a ui-sref="app.settings" class="fa fa-wrench user-options-icon" ng-if="isSelf && !user.is_temp"></a>
+            </div>
+
+            <!--User full name and or username-->
+            <h4 class="text-center">@{{user.username}}</h4>
+
+            <!--Buttons Container-->
+            <friend-buttons user="user" current-user="currentUser"></friend-buttons>
+
+            <!--Bio Container-->
+            <div class="panel bio" ng-if="!user.is_temp">
+                <md-toolbar class="panel-heading">Bio</md-toolbar>
+                <md-content class="panel-body md-padding">
+                    <p ng-if="!user.bio" class="text-center">No Bio...</p>
+
+                    <p ng-if="user.bio">{{user.bio}}</p>
+                </md-content>
+            </div>
+
+            <!--Friends-->
+            <md-content class="panel friends" ng-if="!currentUser.is_temp && !user.is_temp">
+                <md-toolbar class="panel-heading">
+                    <span>
+                        Friends <small ng-show="friends.length">( {{ friends.length }} )</small>
+                    </span>
+                </md-toolbar>
+                <md-content class="panel-body">
+                    <ul class="list-users">
+                        <li ng-if="isSelf && friends.length === 0" class="text-center">
+                            <a ui-sref="app.users" class="md-button md-raised md-accent">
+                                Find Friends
+                            </a>
+                        </li>
+                        <li ng-if="!isSelf && friends.length === 0" class="text-center">
+                            @{{user.username}} has not added anyone yet
+                            <a href class="md-button md-raised md-accent" ng-click="sendRequest(user.id)">
+                                Send Request
+                            </a>
+                        </li>
+                        <li ng-repeat="friend in friends">
+                            <a ui-sref="app.profile({username: friend.username})">
+                                <img ng-src="{{friend.picture_xs}}" alt>
+                                {{friend.username}}
+                            </a>
+                        </li>
+                    </ul>
+                </md-content>
+            </md-content>
+
+            <!--Mutual Friends-->
+            <md-content class="panel friends-mutual" ng-if="currentUser && mutualFriends.length > 0">
+                <md-toolbar class="panel-heading">
+                    <span>
+                        Mutual Friends <small ng-show="mutualFriends.length">({{mutualFriends.length}})</small>
+                    </span>
+                </md-toolbar>
+                <md-content class="panel-body">
+                    <ul class="list-users">
+                        <li></li>
+                        <li ng-repeat="friend in mutualFriends">
+                            <a ui-sref="app.profile({username: friend.username})">
+                                <img ng-src="{{friend.picture_xs}}" alt>
+                                {{friend.username}}
+                            </a>
+                        </li>
+                    </ul>
+                </md-content>
+            </md-content>
+        </div>
+
+        <!--Profile Wall-->
+        <div class="profile-wall-container" flex="70" flex-gt-lg="75">
+            <md-toolbar layout="row" layout-align="end center">
+                <span class="wall-title">The Wall</span>
+
+                <div flex layout="row" layout-align="end">
+                    <md-button class="md-raised md-accent invisible">
+                        <!--This is an invisible placeholder to keep toolbar dimensions. If the user-->
+                        <!--isn't logged in there will be no buttons, causing toolbar to collapse.-->
+                        .
+                    </md-button>
+                    <md-button class="md-raised md-accent" ng-click="toggleBoxForm()" ng-show="(isSelf || isFriend) && !user.is_temp">
+                        Drop a Box
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-content collapse="collapse" class="md-padding md-color grey hue-200">
+                <div ng-include="getPartial('users.show', 'box-upload-form')"></div>
+            </md-content>
+            <packery class="packery">
+                <div class="wall-box text-center" style="width: 100%;" ng-if="!requestingBoxes && boxes.length === 0 && collapse" layout="column" layout-align="center center">
+                    <!--Show if user has no boxes-->
+                    <h3 ng-if="!user.is_temp">@{{user.username}} currently has no boxes</h3>
+                    <md-button ng-if="!user.is_temp" class="md-raised md-accent" ng-click="toggleBoxForm()" ng-show="isSelf || isFriend">
+                        Drop a Box
+                    </md-button>
+
+                    <!--If user is viewing own profile on a temp account.-->
+                    <div ng-if="isSelf && user.is_temp">
+                        <h3>Claim this page.</h3>
+                        <md-button class="md-raised md-accent" ng-click="openDialog('create-account')" ng-show="isSelf || isFriend">
+                            <i class="fa fa-plus-circle"></i> Make my account
+                        </md-button>
+                    </div>
+
+                    <div ng-if="!isSelf && user.is_temp">
+                        <h3>This user is a guest.</h3>
+                    </div>
+                </div>
+
+                <!--Packery items/wall-boxes-->
+                <packery-item ng-repeat="box in boxes" class="wall-box {{box.class}}" data-box-id="{{box.id}}"></packery-item>
+
+                <!--Overlay to hide boxes until they are properly rendered-->
+                <div class="overlay-fill" ng-if="requestingBoxes"></div>
+
+                <!--Overlay to force landscape on small devices-->
+                <div class="overlay-fill force-landscape md-color grey hue-300 text-center" layout="row" layout-align="center">
+                    <h3>
+                        <i class="fa fa-frown-o"></i>
+                        Sorry, must be on landscape to view the wall.
+                    </h3>
+                </div>
+            </packery>
+            <hr style="border-top: 1px solid #aaa" ng-hide="requestingBoxes || boxes.length === 0">
+            <pager meta-data="boxes.meta" pager-action="changePage" pager-buttons="Newer Older" ng-hide="requestingBoxes || boxes.length === 0"></pager>
+        </div>
+    </div>
+</div>
+<!--MOBILE-->
+<div class="Page-Container Profile mobile" ng-controller="UsersShowController" ng-if="!$mdMedia('gt-md')">
+    <div layout="row" layout-wrap layout-align="center" ng-show="initialized">
+        <!--Profile Picture-->
+        <div flex="50" class="md-padding" style="position: relative;">
+            <img class="avatar img-responsive center-block" ng-src="{{user.picture_lg}}" alt>
+            <a ui-sref="app.settings" class="fa fa-wrench user-options-icon" ng-if="isSelf && !user.is_temp"></a>
+        </div>
+
+        <!--Full name/username-->
+        <div flex="100" class="user-names-container">
+            <h4 flex="100" style="margin:0;" class="text-center" hide-md>
+                @{{user.username}}
+            </h4>
+
+            <h3 flex="100" style="margin:0;" class="text-center" hide-sm>
+                @{{user.username}}
+            </h3>
+        </div>
+
+        <!--Buttons Container-->
+        <friend-buttons flex="100" user="user" current-user="currentUser" style="margin-top: 20px;"></friend-buttons>
+
+        <div flex="50" flex-sm="100" class="user-info-tabs" ng-if="!user.is_temp">
+            <md-tabs md-border-bottom md-center-tabs class="md-primary">
+                <md-tab label="Bio">
+                    <md-content class="md-padding">
+                        <p ng-if="!user.bio" class="text-center">No Bio...</p>
+
+                        <p ng-if="user.bio">{{user.bio}}</p>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Friends">
+                    <md-tab-label>
+                        Friends
+                        <small ng-show="friends.length">({{friends.length}})</small>
+                    </md-tab-label>
+                    <ul class="list-users">
+                        <li ng-if="isSelf && friends.length === 0" class="text-center">
+                            <a ui-sref="app.users" class="md-button md-raised md-accent">
+                                Find Friends
+                            </a>
+                        </li>
+                        <li ng-if="!isSelf && friends.length === 0" class="text-center">
+                            @{{user.username}} has not added anyone yet
+                            <a href class="md-button md-raised md-accent" ng-click="sendRequest(user.id)">
+                                Send Request
+                            </a>
+                        </li>
+                        <li ng-repeat="friend in friends">
+                            <a ui-sref="app.profile({username: friend.username})">
+                                <img ng-src="{{friend.picture_xs}}" alt>
+                                {{friend.username}}
+                            </a>
+                        </li>
+                    </ul>
+                </md-tab>
+                <md-tab ng-if="mutualFriends.length > 0">
+                    <md-tab-label>
+                        Mutual
+                        <small ng-show="mutualFriends.length">({{mutualFriends.length}})</small>
+                    </md-tab-label>
+                    <ul class="list-users">
+                        <li ng-repeat="friend in mutualFriends">
+                            <a ui-sref="app.profile({username: friend.username})">
+                                <img ng-src="{{friend.picture_xs}}" alt>
+                                {{friend.username}}
+                            </a>
+                        </li>
+                    </ul>
+                </md-tab>
+            </md-tabs>
+        </div>
+
+        <!--Profile Wall-->
+        <div class="profile-wall-container" flex="100">
+            <md-toolbar layout="row" layout-align="end center" ng-if="!user.is_temp">
+                <span class="wall-title">The Wall</span>
+
+                <div flex layout="row" layout-align="end">
+                    <md-button class="md-raised md-accent invisible">
+                        <!--This is an invisible placeholder to keep toolbar dimensions. If the user-->
+                        <!--isn't logged in there will be no buttons, causing toolbar to collapse.-->
+                        .
+                    </md-button>
+                    <md-button class="md-raised md-accent" ng-click="toggleBoxForm()" ng-show="(isSelf || isFriend) && !user.is_temp">
+                        Drop a Box
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-content collapse="collapse" class="md-padding md-color grey hue-200">
+                <div ng-include="getPartial('users.show', 'box-upload-form')"></div>
+            </md-content>
+            <packery class="packery">
+                <!--Show if user has no boxes-->
+                <div class="wall-box text-center" style="width: 100%;" ng-if="boxes.length === 0" layout="column" layout-align="center center">
+                    <h3 ng-if="!user.is_temp">@{{user.username}} currently has no boxes</h3>
+                    <md-button ng-if="!user.is_temp" class="md-raised md-accent" ng-click="toggleBoxForm()" ng-show="isSelf || isFriend">
+                        Drop a Box
+                    </md-button>
+                    <!--If user is viewing own profile on a temp account.-->
+                    <div ng-if="isSelf && user.is_temp">
+                        <h3>Claim this page.</h3>
+                        <md-button class="md-raised md-accent" ng-click="openDialog('create-account')" ng-show="isSelf || isFriend">
+                            <i class="fa fa-plus-circle"></i> Make my account
+                        </md-button>
+                    </div>
+
+                    <div ng-if="!isSelf && user.is_temp">
+                        <h3>This user is a guest.</h3>
+                    </div>
+                </div>
+
+                <!--Packery items/wall-boxes-->
+                <packery-item ng-repeat="box in boxes" class="wall-box {{box.class}}" data-box-id="{{box.id}}"></packery-item>
+
+                <!--Overlay to hide boxes until they are properly rendered-->
+                <div class="overlay-fill" ng-if="requestingBoxes"></div>
+
+                <!--Overlay to force landscape on small devices-->
+                <div class="overlay-fill force-landscape md-color grey hue-300 text-center" layout="row" layout-align="center">
+                    <h3>
+                        <i class="fa fa-frown-o"></i>
+                        Sorry, must be on landscape to view the wall.
+                    </h3>
+                </div>
+            </packery>
+            <hr style="border-top: 1px solid #aaa" ng-hide="requestingBoxes || boxes.length === 0">
+            <pager meta-data="boxes.meta" pager-action="changePage" pager-buttons="Newer Older" ng-hide="requestingBoxes || boxes.length === 0"></pager>
+        </div>
+    </div>
+</div>

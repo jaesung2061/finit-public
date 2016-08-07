@@ -1,0 +1,261 @@
+<md-tabs md-border-bottom md-stretch-tabs="always" flex dynamic-height="128" class="md-tabs-icons">
+
+    <!--Members list-->
+    <md-tab ng-if="chatroom.type === 'public' || chatroom.type === 'protected'">
+        <md-tab-label>
+            <i class="fa fa-users">
+                <md-tooltip md-delay="0" md-direction="bottom">
+                    Users
+                </md-tooltip>
+            </i>
+        </md-tab-label>
+        <md-content class="tab-members" layout-padding>
+            <div layout="row" class="inline-list">
+                <a flex ui-sref="app.chat.show.dashboard({title: chatroom.title.replace('#', '')})"
+                   ng-if="(isModFor(currentUser, chatroom.channel) || chatroom.owner_id === currentUser.id) && chatroom.type === 'public'">
+                    <i class="fa fa-tachometer"></i>
+                    <md-tooltip md-direction="bottom">
+                        Mod Dashboard
+                    </md-tooltip>
+                </a>
+                <a href flex ng-if="!chatroom.owner_id && chatroom.type === 'public'" ng-click="claimHashtag(chatroom)">
+                    <i class="fa fa-hashtag"></i>
+                    <md-tooltip md-direction="bottom">
+                        Claim This Hashtag
+                    </md-tooltip>
+                </a>
+                <a href flex ng-click="toggleDarkTheme()">
+                    <i class="fa fa-moon-o"></i>
+                    <md-tooltip md-direction="bottom">
+                        Night Mode
+                    </md-tooltip>
+                </a>
+                <a href flex ng-click="openHelpMenu()">
+                    <i class="fa fa-question"></i>
+                    <md-tooltip md-direction="bottom">
+                        Help
+                    </md-tooltip>
+                </a>
+                <a href flex ng-click="refreshMembers(chatroom)">
+                    <i class="fa fa-refresh"></i>
+                    <md-tooltip md-direction="bottom">
+                        Refresh
+                    </md-tooltip>
+                </a>
+            </div>
+
+            <form ng-submit="sendInvites(chatroom)" ng-if="chatroom.type === 'protected'">
+                <md-input-container md-no-float style="padding-bottom: 0;">
+                    <md-tooltip>Separate by commas</md-tooltip>
+                    <input type="text" ng-model="inviteFormData.username" placeholder="Invite users">
+                </md-input-container>
+                <div class="text-right">
+                    <md-button class="md-primary">
+                        <i class="fa fa-check"></i> Invite
+                    </md-button>
+                </div>
+            </form>
+
+            <p class="text-center" ng-if="chatroom.settings.mode"><b>Mode: </b> {{chatroom.settings.mode}}</p>
+
+            <ul class="list-users">
+                <li ng-repeat="member in chatroom.members">
+                    <md-menu>
+                        <a class="member" href ng-click="openMenu($mdOpenMenu, $event)"
+                           ng-class="{'is-mod': member.mod_powers.indexOf(chatroom.channel) > -1, 'is-admin': member.id === 1, 'is-regular': member.regularTags.indexOf(chatroom.channel) > -1}">
+                            <img class="img-circle" ng-src="{{member.picture_xs}}" alt>
+                            {{member.username}}
+                        </a>
+                        <md-menu-content width="4">
+                            <md-menu-item>
+                                <button type="button" class="md-button md-default-theme" ng-click="$state.go('app.profile', {username: member.username})">
+                                    <img width="24" height="24" ng-src="{{member.picture_xs}}" alt>
+                                    View Profile
+                                </button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <button type="button" class="md-button md-default-theme" ng-click="appendUsernameToChatEntry(member.username, true)">
+                                    Tag in Chat
+                                </button>
+                            </md-menu-item>
+                            <md-menu-item ng-if="!member.isFriend && member.id !== currentUser.id && !currentUser.is_temp && !member.is_temp">
+                                <button type="button" class="md-button md-default-theme" ng-click="sendRequest(chatroom, member.id)">
+                                    Add Friend
+                                </button>
+                            </md-menu-item>
+                            <md-menu-item ng-if="member.id !== currentUser.id">
+                                <button type="button" class="md-button md-default-theme" ng-click="$state.go('app.chat.show', {title: '@' + member.username})">
+                                    Chat
+                                </button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </li>
+            </ul>
+        </md-content>
+    </md-tab>
+
+    <!--Options and chatroom info-->
+    <md-tab ng-if="chatroom.type === 'public'">
+        <md-tab-label>
+            <i class="fa fa-info-circle">
+                <md-tooltip md-delay="0" md-direction="bottom">
+                    Chatroom description
+                </md-tooltip>
+            </i>
+        </md-tab-label>
+        <md-content class="chatroom-description" layout-padding>
+            <!--If chatroom has not been claimed-->
+            <div markdown-to-html="chatroom.description || '####This chatroom does not yet have a description.'" class="description"></div>
+        </md-content>
+    </md-tab>
+
+    <!--Profile-->
+    <md-tab ng-if="chatroom.type === 'private'">
+        <md-tab-label>
+            <i class="fa fa-user">
+                <md-tooltip md-delay="0" md-direction="bottom">
+                    Profile
+                </md-tooltip>
+            </i>
+        </md-tab-label>
+        <md-content layout-padding layout="row" layout-align="center" layout-wrap>
+            <div flex="50">
+                <a ui-sref="app.profile({username: chatroom.otherUser.username})">
+                    <img class="img-responsive img-circle" ng-src="{{chatroom.otherUser.picture_md}}">
+                </a>
+            </div>
+
+            <h4 flex="100" class="text-center">
+                <a ui-sref="app.profile({username: chatroom.otherUser.username})">
+                    @{{chatroom.otherUser.username}}
+                </a>
+            </h4>
+
+            <friend-buttons user="chatroom.otherUser" current-user="currentUser"></friend-buttons>
+
+            <p flex="100" ng-if="chatroom.otherUser.website">
+                <strong>Website:</strong> {{chatroom.otherUser.website}}
+            </p>
+
+            <p flex="100" ng-if="chatroom.otherUser.website">
+                <strong>Bio:</strong> {{chatroom.otherUser.bio}}
+            </p>
+        </md-content>
+    </md-tab>
+
+    <!--Polls-->
+    <md-tab class="polls" md-active="showPollTab" ng-if="chatroom.type === 'public' || chatroom.type === 'protected'">
+        <md-tab-label>
+            <i class="fa fa-bar-chart">
+                <md-tooltip md-delay="0" md-direction="bottom">
+                    Polls
+                </md-tooltip>
+            </i>
+            <i class="badge red" ng-show="chatroom.newPolls.length > 0" ng-click="viewNewPoll(chatroom)" title="{{chatroom.newPolls.length}} new poll(s)">
+                {{chatroom.newPolls.length}}
+            </i>
+        </md-tab-label>
+        <md-content layout-padding>
+            <div class="poll-container">
+                <pager class="polls-pager"
+                       ng-hide="!chatroom.poll || !chatroom.pollMeta || (chatroom.pollMeta.current_page === 1 && chatroom.pollMeta.current_page === chatroom.pollMeta.last_page)"
+                       meta-data="chatroom.pollMeta"
+                       pager-buttons="null"
+                       pager-action="changePoll"
+                       theme="md-color grey hue-200">
+                </pager>
+
+                <div class="text-center">
+                    <a ui-sref="app.chat.show.polls" ng-show="chatroom.type === 'public'">
+                        All polls
+                    </a>
+
+                    <span ng-show="chatroom.type === 'private' && chatroom.newPolls.length > 0">-</span>
+
+                    <a href ng-show="chatroom.newPolls.length > 0" ng-click="viewNewPoll(chatroom)" title="{{chatroom.newPolls.length}} new poll(s)">
+                        View new poll.
+                    </a>
+                </div>
+
+                <h4 class="question text-center bold" ng-show="chatroom.poll">{{chatroom.poll.question}}</h4>
+                <h4 class="question text-center" ng-hide="chatroom.poll">No active polls</h4>
+
+                <div class="vote-graph" ng-show="chatroom.poll">
+                    <!--POLL VOTES GRAPH-->
+                    <div ng-show="chatroom.poll.userHasVoted || currentUser.is_temp" class="text-center">
+                        <div ng-repeat="option in chatroom.poll.options1 track by $index">
+                            <span>{{option}}</span>
+                            <uib-progressbar animate="false" value="chatroom.poll.votePercentages[$index + 1]" theme="md-color blue">
+                                <span>
+                                    {{chatroom.poll.votes[$index + 1]}}
+                                    |
+                                    {{(chatroom.poll.votePercentages[$index + 1]) | number : 0}}%
+                                </span>
+                            </uib-progressbar>
+                        </div>
+                        <div class="md-padding md-color red hue-100" ng-if="currentUser.is_temp">Must have an account to vote.</div>
+                    </div>
+
+                    <!--POLL VOTE FORM-->
+                    <div class="vote-form" ng-hide="chatroom.poll.userHasVoted || currentUser.is_temp">
+                        <md-radio-group ng-model="voteFormData.option">
+                            <md-radio-button value="{{ ($index + 1) }}" class="md-primary" ng-repeat="option in chatroom.poll.options1 track by $index">
+                                {{option}}
+                            </md-radio-button>
+                        </md-radio-group>
+
+                        <!--POLL VOTE SUBMIT-->
+                        <md-button class="md-raised md-primary center-block vote-button" ng-click="submitVote(chatroom)" aria-label="Submit Vote">
+                            <i class="fa fa-check"></i> Vote
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+    </md-tab>
+
+    <!--Post a poll-->
+    <md-tab ng-if="chatroom.type === 'public' || chatroom.type === 'protected'">
+        <md-tab-label>
+            <i class="fa fa-bar-chart"></i>
+            <i class="fa fa-plus" style="position: absolute"></i>
+            <md-tooltip md-delay="0" md-direction="bottom">
+                Post a new poll
+            </md-tooltip>
+        </md-tab-label>
+        <md-content class="md-padding">
+            <h4 class="text-center">Post a Poll</h4>
+            <div class="md-padding md-color red hue-100" ng-if="currentUser.is_temp">
+                Must have an account to post a poll.
+            </div>
+            <form ng-submit="postPoll(chatroom, pollFormData)" ng-if="!currentUser.is_temp">
+                <md-input-container>
+                    <label>Question</label>
+                    <input class="poll-option" type="text" ng-model="pollFormData.question" autocomplete="off">
+                </md-input-container>
+                <md-input-container ng-repeat="i in optionsCount">
+                    <label>Option</label>
+                    <input class="poll-option" type="text" ng-model="pollFormData.options[$index]" autocomplete="off" md-maxlength="30" maxlength="30" ng-keypress="pushNewOption($event);">
+                </md-input-container>
+                <div layout="row" layout-align="space-between">
+                    <md-button class="md-primary" ng-click="pushNewOption()" ft-invisible="optionsCount.length === 10" type="button" aria-label="Add another option">
+                        <i class="fa fa-plus"></i>
+                    </md-button>
+                    <md-button class="md-primary md-raised" type="submit">
+                        <i class="fa fa-check"></i>
+                        Post
+                    </md-button>
+                </div>
+            </form>
+        </md-content>
+    </md-tab>
+
+    <!--Close sidenav button-->
+    <md-tab ng-if="!$mdMedia('gt-md')">
+        <md-tab-label>
+            <i class="fa fa-times-circle" title="Close sidebar" ng-click="close();$event.stopPropagation()"></i>
+        </md-tab-label>
+        <md-content class="md-padding"></md-content>
+    </md-tab>
+</md-tabs>

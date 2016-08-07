@@ -1,0 +1,10 @@
+.Dialog.Help {
+    max-width: 600px;
+
+    table tr td:first-child {
+        white-space: nowrap;
+    }
+    table tr td {
+        padding: 4px;
+    }
+}

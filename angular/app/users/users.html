@@ -1,0 +1,37 @@
+<div class="Page-Container Users" ng-controller="UsersController">
+    <md-toolbar layout="row" layout-align="center center" class="md-padding">Users</md-toolbar>
+    <div layout="row" layout-wrap>
+        <md-content flex="30" flex-md="100" flex-sm="100" class="md-padding">
+            <form ng-submit="query(1)" layout="column">
+                <md-input-container flex>
+                    <label>Name or Username</label>
+                    <input ng-model="param" type="text">
+                </md-input-container>
+                <md-content flex layout="row" layout-align="end">
+                    <md-button class="md-accent md-raised">
+                        <i class="fa fa-search"></i> Search
+                    </md-button>
+                </md-content>
+            </form>
+        </md-content>
+
+        <md-content flex="70" flex-md="100" flex-sm="100">
+            <md-content>
+                <md-grid-list md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4"
+                              md-row-height-gt-md="1:1" md-row-height="2:2"
+                              md-gutter="12px" md-gutter-gt-sm="8px"
+                              class="users-index text-center">
+                    <md-grid-tile class="user fadeInUp" ng-repeat="user in users">
+                        <a ui-sref="app.profile({username: user.username})">
+                            <img class="img-responsive" ng-src="{{user.picture_md}}" alt>
+                            <md-grid-tile-footer>
+                                <h3>@{{user.username}}</h3>
+                            </md-grid-tile-footer>
+                        </a>
+                    </md-grid-tile>
+                </md-grid-list>
+            </md-content>
+            <pager meta-data="users.meta" pager-action="changePage"></pager>
+        </md-content>
+    </div>
+</div>

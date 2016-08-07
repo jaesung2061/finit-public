@@ -1,0 +1,13 @@
+.Page-Container.Updates {
+    .updates-entry {
+        ul {
+            margin-bottom: 1em;
+            ul {
+                margin-bottom: 0;
+            }
+        }
+    }
+    .update-date {
+        margin: 0;
+    }
+}

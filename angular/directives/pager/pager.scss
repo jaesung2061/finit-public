@@ -1,0 +1,16 @@
+.pager {
+    padding: 0;
+    list-style: none;
+    li {
+        display: inline-block;
+        width: 140px;
+        position: relative;
+        min-width: 0;
+        &.previous {
+            left: 0;
+        }
+        &.next {
+            right: 0;
+        }
+    }
+}

@@ -1,0 +1,207 @@
+$sidebarColor: #7E57C2;
+
+.Sidebar {
+    background-color: $sidebarColor;
+    white-space: nowrap;
+    md-list-item.md-2-line .md-list-item-text p,
+    md-list-item.md-2-line > .md-no-style .md-list-item-text p,
+    md-list-item.md-3-line .md-list-item-text p,
+    md-list-item.md-3-line > .md-no-style .md-list-item-text p {
+        color: inherit;
+    }
+    md-content {
+        background-color: $sidebarColor;
+    }
+    form.join-chat {
+        background-color: #673AB7;
+    }
+}
+
+.Sidebar,
+.Sidebar.md-locked-open-add-active,
+.Sidebar.md-locked-open {
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+}
+
+.Sidebar-header {
+    min-height: 64px;
+    height: 64px;
+    max-height: 64px;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    background-color: $sidebarColor;
+}
+
+.Sidebar-profile-link {
+    display: block;
+    color: #fff;
+    img {
+        display: inline-block;
+        min-height: 64px;
+        height: 64px;
+        max-height: 64px;
+        width: auto;
+    }
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: none;
+        color: #fff;
+        background-color: rgba(#000, .4);
+    }
+}
+
+.Sidebar-pages {
+    //background-color: rgb(63, 81, 181);
+    color: white;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.Sidebar-pages md-list md-list-item button.md-button:not([disabled]):hover {
+    background-color: rgba(158, 158, 158, 0.2) !important;
+}
+
+.Sidebar-page {
+    cursor: pointer;
+    .fa {
+        margin-right: 8px;
+    }
+}
+
+.Sidebar-page md-list-item {
+    /*IE centering fix*/
+    height: 48px;
+}
+
+.Sidebar-page.active {
+    background-color: rgba(158, 158, 158, 0.3) !important;
+}
+
+.Sidebar-list-nav {
+    font-size: 18px;
+    .active {
+        background-color: rgba(#000, .2);
+    }
+}
+
+.Sidebar-list {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    position: relative;
+    > li {
+        display: block;
+        position: relative;
+        a {
+            padding: 1px;
+            color: #fff;
+            display: block;
+            &:hover,
+            &:active,
+            &:focus {
+                text-decoration: none;
+                background: rgba(#000, .2);
+            }
+        }
+        img {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            margin-right: 4px;
+        }
+        .buttons-container {
+            position: absolute;
+            right: 3px;
+            bottom: 2px;
+            .fa {
+                display: inline-block;
+                padding: 4px;
+                font-size: 22px;
+                color: #fff;
+                border-radius: 4px;
+            }
+            .fa-check-circle {
+                background-color: #00dd00;
+                margin-right: 4px;
+                &:hover {
+                    background-color: #009900;
+                }
+            }
+            .fa-times-circle {
+                background-color: #dd0000;
+                &:hover {
+                    background-color: #990000;
+                }
+            }
+        }
+    }
+}
+
+.Sidebar-list.friends {
+    .fa {
+        display: none;
+        color: #0F0;
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .is-online .fa {
+        display: block;
+    }
+}
+
+.Sidebar-list.notifications {
+    white-space: normal;
+    a {
+        padding: 6px;
+    }
+    button {
+        width: 100%;
+    }
+}
+
+md-sidenav.Sidebar .Sidebar-list.chatrooms md-list-item.md-2-line .md-list-item-text {
+    h3 {
+        color: #fff;
+    }
+}
+
+.inline-list {
+    border-bottom: 1px solid #ccc;
+    a {
+        color: #fff;
+        display: block;
+        padding: 10px 0;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        &:hover,
+        &:active,
+        &:focus {
+            color: #fff;
+            text-decoration: none;
+            background-color: rgba(#000, .2);
+        }
+        .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+}
+
+.sidebar-form {
+    white-space: normal;
+    overflow: auto;
+    ul {
+        list-style: circle;
+        padding-left: 20px;
+        ::before {
+            color: #fff;
+        }
+    }
+}

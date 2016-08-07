@@ -1,0 +1,274 @@
+.Page-Container.Chat-App {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    &.max-width-full {
+        max-width: 100%;
+    }
+    .chat-leave-button {
+        position: absolute;
+        top: 6px;
+        right: 26px;
+        display: block;
+        width: 30px;
+        height: 30px;
+        font-size: 20px;
+        z-index: 1;
+        text-align: center;
+        line-height: 30px;
+        border-radius: 15px;
+        cursor: pointer;
+        opacity: .5;
+        @media (max-width: 600px) {
+            right: 6px;
+        }
+        &:hover {
+            opacity: 1;
+        }
+    }
+    .chat-messages-container {
+        overflow-y: scroll;
+        position: relative;
+        md-list md-list-item.md-2-line .md-list-item-text p, md-list md-list-item.md-3-line .md-list-item-text p {
+            color: rgba(#000, .9);
+            font-size: 17px;
+            @media (max-width: 600px) {
+                font-size: 16px;
+            }
+        }
+        md-list-item {
+            padding: 0 18px;
+            @media (max-width: 600px) {
+                padding: 0 14px;
+            }
+            .md-list-item-text p img {
+                max-height: 200px;
+                max-width: 100%;
+            }
+        }
+        .md-list-item-text {
+            padding: 6px 0;
+            h3 {
+                position: relative;
+                margin-bottom: 4px;
+                small {
+                    position: absolute;
+                    right: 0;
+                }
+            }
+        }
+        .md-avatar:first-child {
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
+        .chat-message {
+            cursor: default;
+            overflow-x: hidden;
+            h3 {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            p {
+                line-height: 19px;
+            }
+            span.is-mod {
+                color: #2962FF;
+            }
+            span.is-admin {
+                color: #D50000;
+            }
+            &.me {
+                background-color: rgba(#000, 0.2);
+                p {
+                    margin-bottom: 0;
+                    @media (min-width: 600px) {
+                        font-size: 17px;
+                    }
+                }
+            }
+            &.spoiler {
+                background-color: #666 !important;
+                .md-list-item-text {
+                    h3 span {
+                        color: #ccc;
+                    }
+                    p:first-of-type {
+                        color: #666 !important;
+                        a {
+                            color: #666 !important;
+                        }
+                        &::before {
+                            color: #ccc !important;
+                            content: 'Spoiler! Hover to view.';
+                        }
+                    }
+                }
+                &:hover {
+                    .md-list-item-text {
+                        p:first-of-type {
+                            color: #ccc !important;
+                            &::before {
+                                content: '';
+                            }
+                            a {
+                                color: inherit !important;
+                            }
+                        }
+                    }
+                }
+            }
+            p.meme-arrow {
+                color: #789922 !important;
+            }
+            &:hover {
+                background-color: rgba(#000, .1);
+            }
+        }
+        .chat-event {
+            min-height: 30px;
+            text-align: right;
+            span {
+                font-size: 10.4px
+            }
+            &:hover {
+                background-color: rgba(#000, .1);
+            }
+        }
+    }
+    .chat-entry-container {
+        max-height: 40px;
+        position: relative;
+        .btn-toggle-sidenav {
+            min-width: 40px;
+        }
+        md-input-container {
+            border-top: 1px solid #ccc;
+            padding-bottom: 0;
+        }
+        input[type=text] {
+            border: none;
+            border-top: 1px solid #ccc;
+            padding-left: 10px;
+            width: 100%;
+            height: 40px;
+        }
+        button {
+            min-width: 40px;
+            margin: 0;
+            border-radius: 0;
+        }
+    }
+    md-sidenav {
+        > md-content {
+            overflow: hidden;
+            margin-right: 0;
+        }
+        .md-toolbar-tools {
+            overflow: hidden;
+            .fa-times-circle {
+                display: inline-block;
+                padding: 5px;
+                border-radius: 16px;
+                cursor: pointer;
+                &:hover,
+                &:active,
+                &:focus {
+                    background-color: rgba(#000, .2);
+                }
+            }
+        }
+
+        .is-mod {
+            color: #2962FF;
+        }
+        .is-admin {
+            color: #D50000;
+        }
+        .is-regular {
+            border-right: 5px solid #673AB7;
+        }
+
+        // These prevent the pagination from showing up on the tabs
+        md-tabs-canvas.md-paginated {
+            margin: 0;
+        }
+        md-prev-button,
+        md-next-button {
+            display: none;
+        }
+        md-tab-item {
+            .fa {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                line-height: 48px;
+                &.fa-plus {
+                    left: 21px;
+                    top: -7px;
+                    color: #7C4DFF;
+                }
+                &.fa-times-circle {
+                    font-size: 24px;
+                }
+            }
+            .badge {
+                position: absolute;
+                right: 10px;
+                top: 5px;
+            }
+        }
+        // End tabs
+
+        .tab-members {
+            md-list {
+                padding-top: 0;
+            }
+            md-list-item,
+            .md-list-item-inner {
+                min-height: 0;
+            }
+            .inline-list {
+                margin-left: -8px;
+                margin-right: -8px;
+                margin-top: -8px;
+                border-bottom: 0;
+                a {
+                    color: #000;
+                }
+            }
+        }
+
+        .vote-button {
+            padding: 13px;
+            min-height: 0;
+            line-height: initial;
+        }
+        md-list-item {
+            .fa {
+                display: inline-block;
+                padding: 5px;
+                font-size: 120%;
+            }
+        }
+
+        .subscribed-chatrooms li a {
+            padding: 5px;
+        }
+
+        .chatroom-description {
+            .description {
+                overflow-x: hidden;
+                img {
+                    max-width: 100%;
+                }
+                ul {
+                    list-style: inherit;
+                }
+            }
+        }
+    }
+}

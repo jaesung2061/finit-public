@@ -1,0 +1,52 @@
+<div class="Page-Container Create-Room" ng-controller="CreateRoomController" layout="row" layout-align="center">
+    <div flex>
+        <md-toolbar class="md-primary md-padding" layout="row" layout-align="center">
+            Create a Private Room
+        </md-toolbar>
+        <form ng-submit="submit()">
+            <validation errors="errors"></validation>
+
+            <md-input-container>
+                <label>Title</label>
+                <input type="text" ng-model="formData.title">
+            </md-input-container>
+
+            <div>
+                <p>Who can join the chat?</p>
+
+                <md-checkbox ng-model="formData.auth.anyone" aria-label="Anyone" ng-disabled="formData.auth.friends || formData.auth['friends-of-friends'] || formData.auth.invite">
+                    Anyone <span ng-show="formData.auth.friends || formData.auth['friends-of-friends'] || formData.auth.invite">(You have restricted who can join)</span>
+                </md-checkbox>
+
+                <md-checkbox ng-model="formData.auth.friends" aria-label="Friends" ng-disabled="formData.auth.anyone">
+                    Friends <span ng-show="formData.auth.anyone">(Anyone can join already)</span>
+                </md-checkbox>
+
+                <md-checkbox ng-model="formData.auth['friends-of-friends']" aria-label="Friends of friends" ng-disabled="formData.auth.anyone">
+                    Friends of friends <span ng-show="formData.auth.anyone">(Anyone can join already)</span>
+                </md-checkbox>
+
+                <md-checkbox ng-model="formData.auth.invite" aria-label="Invites" ng-disabled="formData.auth.anyone">
+                    Invites <span ng-show="formData.auth.anyone">(Anyone can join already)</span>
+                </md-checkbox>
+
+                <div class="invite-permissions">
+                    <p>Who can send invites for this chatroom?</p>
+
+                    <md-radio-group ng-model="formData.invitePermissions" ng-disabled="!formData.auth.invite">
+                        <md-radio-button value="owner">Only me</md-radio-button>
+                        <md-radio-button value="friends">Friends</md-radio-button>
+                        <md-radio-button value="friends-of-friends">Friends and their friends</md-radio-button>
+                        <md-radio-button value="anyone">Anyone</md-radio-button>
+                    </md-radio-group>
+                </div>
+            </div>
+
+            <div class="text-right">
+                <md-button class="md-raised md-primary">
+                    <i class="fa fa-check"></i> Create
+                </md-button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+.Users {
+    md-grid-tile {
+        img {
+            width: 100%;
+        }
+    }
+    md-grid-tile-footer {
+        background: rgba(#000, .4);
+        text-align: left;
+
+        h3:first-child {
+            margin-bottom: 4px;
+        }
+    }
+}

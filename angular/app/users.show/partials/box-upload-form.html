@@ -1,0 +1,108 @@
+<div flex layout="row" layout-wrap layout-align="center" ng-controller="BoxFormController" class="box-upload-form md-padding">
+    <!--Size Selection-->
+    <div flex="40" flex-lg="60" flex-md="60" flex-sm="70" ng-show="boxFormStep === 1">
+        <p class="text-center">Select a Size</p>
+
+        <md-grid-list md-cols-sm="3" md-cols-md="3" md-cols-gt-md="3"
+                      md-row-height-gt-md="1:1" md-row-height="2:2"
+                      md-gutter="12px" md-gutter-gt-sm="8px">
+            <md-grid-tile class="box" md-colspan="1" md-rowspan="1" ng-click="selectBoxSize(1, 1)">
+                <h5>1x1</h5>
+            </md-grid-tile>
+
+            <md-grid-tile class="box" md-colspan="2" md-rowspan="1" ng-click="selectBoxSize(2, 1)">
+                <h5>2x1</h5>
+            </md-grid-tile>
+
+            <md-grid-tile class="box" md-colspan="1" md-rowspan="2" ng-click="selectBoxSize(1, 2)">
+                <h5>1x2</h5>
+            </md-grid-tile>
+
+            <md-grid-tile class="box" md-colspan="2" md-rowspan="2" ng-click="selectBoxSize(2, 2)">
+                <h5>2x2</h5>
+            </md-grid-tile>
+        </md-grid-list>
+    </div>
+
+    <!--Content, Color, Submit-->
+    <div flex="50" flex-sm="70" ng-show="boxFormStep === 2">
+        <h4 class="text-center">Upload</h4>
+
+        <validation errors="boxUploadErrors"></validation>
+
+        <md-input-container>
+            <label>Content here...</label>
+            <textarea ng-model="boxFormData.body"></textarea>
+        </md-input-container>
+
+        <div layout="row" layout-align="center" layout-wrap class="text-center color-selection">
+            <div ng-repeat="color in colors" class="md-color {{color}} hue-300 hover"
+                 ng-click="selectBoxColor(color)" ng-class="{selected: boxFormData.color === color}"></div>
+            <div ngf-select ngf-change="onFileSelect($files)" accept="image/*" class="md-color grey hue-50 hover" ng-class="{selected: !!cropOptions.croppedImage}">
+                <i class="fa fa-camera"></i>
+            </div>
+        </div>
+
+        <div ng-if="cropperReady">
+            <img-crop crop-options="cropOptions"></img-crop>
+        </div>
+
+        <div class="text-center">
+            <md-button class="md-raised md-accent" ng-click="boxFormStep = boxFormStep - 1">
+                <i class="fa fa-arrow-left"></i> Back
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="submit(boxFormData)">
+                <i class="fa fa-check"></i> Submit
+            </md-button>
+            <md-button class="md-primary" ng-click="boxFormStep = 3">Preview</md-button>
+        </div>
+    </div>
+
+    <!--Preview, Submit-->
+    <div flex="50" flex-sm="70" ng-show="boxFormStep === 3">
+        <div class="center-block {{previewClass}}" ng-class="{photo: !!cropOptions.croppedImage}">
+            <div ng-if="!!cropOptions.croppedImage" style="background-image: url( {{ cropOptions.croppedImage }} )">
+                <div>
+                    <div class="box-header">
+                        <a href>
+                            <img ng-src="{{currentUser.picture_xs}}">
+                            {{currentUser.username}}
+                        </a>
+                    </div>
+                    <div class="box-content">
+                        {{boxFormData.body}}
+                    </div>
+                    <div class="box-footer" layout="row">
+                        <a href flex="25">
+                            <i class="fa fa-thumbs-up"></i>
+                        </a>
+                        <span flex layout="row" layout-align="end">Just now</span>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="!cropOptions.croppedImage">
+                <div class="box-header">
+                    <img ng-src="{{currentUser.picture_xs}}">
+                    <span>{{currentUser.username}}</span>
+                </div>
+                <div class="box-content">
+                    {{boxFormData.body}}
+                </div>
+                <div class="box-footer" layout="row">
+                    <a href flex="25">
+                        <i class="fa fa-thumbs-up"></i>
+                    </a>
+                    <span flex layout="row" layout-align="end">Just now</span>
+                </div>
+            </div>
+        </div>
+        <div layout="row" layout-align="center center">
+            <md-button class="md-raised md-accent" ng-click="boxFormStep = boxFormStep - 1">
+                <i class="fa fa-arrow-left"></i> Back
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="submit(boxFormData)">
+                <i class="fa fa-check"></i> Submit
+            </md-button>
+        </div>
+    </div>
+</div>

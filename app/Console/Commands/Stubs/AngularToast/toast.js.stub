@@ -1,0 +1,13 @@
+(function(){
+    "use strict";
+
+    angular.module('app.controllers')
+        .controller('{{StudlyName}}ToastController', function ($scope, $mdToast) {
+
+            $scope.action = function() {
+              $mdToast.hide();
+            };
+
+        });
+
+})();

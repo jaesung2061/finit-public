@@ -1,0 +1,19 @@
+<md-dialog class="Dialog Select-username">
+	<form ng-submit="save(username)">
+		<md-dialog-content>
+			<h2 class="md-title">Select a Username</h2>
+
+			<validation errors="errors"></validation>
+
+			<md-input-container flex>
+        		<label>Username</label>
+				<input type="text" ng-model="username">
+      		</md-input-container>
+		</md-dialog-content>
+
+		<div class="md-actions" layout="row">
+			<md-button type="button" ng-click="hide()">Cancel</md-button>
+			<md-button class="md-primary md-raised" type="submit"><i class="fa fa-check"></i> Chat</md-button>
+		</div>
+	</form>
+</md-dialog>

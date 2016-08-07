@@ -1,0 +1,16 @@
+.Dialog.chatroom-edit {
+    max-width: 800px;
+    height: 110%;
+    textarea {
+        //height: 300px;
+        //max-height: 300px;
+        //overflow-y: scroll;
+    }
+    .md-actions {
+        padding-right: 0;
+    }
+    .image-cropper {
+        width: 200px;
+        height: 200px;
+    }
+}

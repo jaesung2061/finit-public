@@ -1,0 +1,93 @@
+<div class="Page-Container Chat-Commands" ng-controller="ChatCommandsController" layout="row" layout-align="center" layout-wrap>
+    <md-toolbar flex="100" flex-gt-lg="60" layout="row" layout-align="center center" layout-padding>
+        Chat Commands
+    </md-toolbar>
+
+    <div flex="100" flex-gt-lg="60" layout-padding>
+        <h4>All users</h4>
+
+        <p>To execute these commands, type them into the chat message box.</p>
+
+        <table class="table">
+            <tr>
+                <td><b>/me &lt;MESSAGE&gt;</b></td>
+                <td>This will send a message as if you were talking in third person.</td>
+            </tr>
+            <tr>
+                <td><b>/spoiler &lt;MESSAGE&gt;</b></td>
+                <td>This will send a message with hidden text. The message will be shown when the mouse is moved over it.</td>
+            </tr>
+            <tr>
+                <td><b>/face &lt;FACE&gt;</b></td>
+                <td>
+                    <p>This will display a text face.</p>
+
+                    <p>Options: </p>
+
+                    <table class="table">
+                        <tr ng-repeat="(key, value) in faces">
+                            <td><strong>{{key.replace('\\b', '').replace('\\b', '')}}</strong>:</td>
+                            <td>{{value}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td><b>/join &lt;NAME&gt;</b></td>
+                <td>Join a new room, or change to an existing one.</td>
+            </tr>
+            <tr>
+                <td><b>/leave &lt;NAME&gt;</b></td>
+                <td>Leave the provided room. If no name is provided, you will leave the current room.</td>
+            </tr>
+            <tr>
+                <td><b>/mute &lt;NAME&gt;</b></td>
+                <td>Stop receiving messages from a user. They can still see your messages.</td>
+            </tr>
+            <tr>
+                <td><b>/unmute &lt;NAME&gt;</b></td>
+                <td>If you've muted a user, this command will undo it.</td>
+            </tr>
+        </table>
+
+        <h4>Moderator commands</h4>
+
+        <p>Only moderators can use these commands.</p>
+
+        <table class="table">
+            <tr>
+                <td><b>/kick &lt;NAME&gt;</b></td>
+                <td>Kicks the user from the chatroom</td>
+            </tr>
+            <tr>
+                <td><b>/ban &lt;NAME&gt;</b></td>
+                <td>Kicks a user out of the chatroom and prevents that user from rejoining.</td>
+            </tr>
+            <tr>
+                <td><b>/unban &lt;NAME&gt;</b></td>
+                <td>Lifts the ban.</td>
+            </tr>
+            <tr>
+                <td><b>/mode &lt;MODE&gt;</b></td>
+                <td>Sets a chatroom to a restricted mode</td>
+            </tr>
+            <tr>
+                <td><b>/reg &lt;NAME&gt;</b></td>
+                <td>
+                    Tags user as a "regular". If the chatroom mode is set to "regulars," only users tagged as "regular" and moderators can send messages.<br>
+                    Modes:
+                    <ul>
+                        <li><b>all</b> - Any user can send messages. (Default)</li>
+                        <li><b>mods</b> - Only moderators can send messages.</li>
+                        <li><b>regulars</b> - Only moderators and users tagged as "regular" can send messages.</li>
+                        <li><b>registered</b> - Only moderators and registered users can send messages.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><b>/dereg &lt;NAME&gt;</b></td>
+                <td>Removes a "regular" tag from a user.</td>
+            </tr>
+        </table>
+    </div>
+</div>

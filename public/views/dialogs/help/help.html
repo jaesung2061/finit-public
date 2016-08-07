@@ -1,0 +1,63 @@
+<md-dialog class="Dialog Help">
+    <md-dialog-content>
+        <h2 class="md-title text-center">Help</h2>
+
+        <p>Commands:</p>
+
+        <table class="table">
+            <tr>
+                <td><b>/me &lt;MESSAGE&gt;</b></td>
+                <td>This will send a message as if you were talking in third person.</td>
+            </tr>
+            <tr>
+                <td><b>/spoiler &lt;MESSAGE&gt;</b></td>
+                <td>This will send a message with hidden text. The message will be shown when the mouse is moved over it.</td>
+            </tr>
+            <tr>
+                <td><b>/face &lt;FACE&gt;</b></td>
+                <td>
+                    <p>This will display a text face.</p>
+
+                    <p>Options: </p>
+
+                    <table class="table">
+                        <tr ng-repeat="(key, value) in faces">
+                            <td><strong>{{key.replace('\\b', '').replace('\\b', '')}}</strong>:</td>
+                            <td>{{value}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td><b>/join &lt;NAME&gt;</b></td>
+                <td>Join a new room, or change to an existing one.</td>
+            </tr>
+            <tr>
+                <td><b>/leave &lt;NAME&gt;</b></td>
+                <td>Leave the provided room. If no name is provided, you will leave the current room.</td>
+            </tr>
+            <tr>
+                <td><b>/mute &lt;NAME&gt;</b></td>
+                <td>Stop receiving messages from a user. They can still see your messages.</td>
+            </tr>
+            <tr>
+                <td><b>/unmute &lt;NAME&gt;</b></td>
+                <td>If you've muted a user, this command will undo it.</td>
+            </tr>
+            <!--<tr>-->
+            <!--<td>/google &lt;SEARCH&gt;</td>-->
+            <!--<td>Open a dialog with the google search results for your input.<br><strong>Not ready yet</strong>.</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+            <!--<td>/wa &lt;SEARCH&gt;</td>-->
+            <!--<td>Open a dialog with Wolfram Alpha results for your input.<br><strong>Not ready yet</strong>.</td>-->
+            <!--</tr>-->
+        </table>
+
+    </md-dialog-content>
+
+    <div class="md-actions" layout="row">
+        <md-button class="md-raised md-accent" type="button" ng-click="hide()"><i class="fa fa-check"></i> Got it
+        </md-button>
+    </div>
+</md-dialog>

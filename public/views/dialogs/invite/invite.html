@@ -1,0 +1,32 @@
+<md-dialog ng-controller="InviteDialogController" class="Dialog invite">
+    <md-dialog-content>
+        <!--Invite message input-->
+        <!--<md-input-container class="message-input-container">-->
+            <!--<label>Invite message</label>-->
+            <!--<input type="text" ng-model="name" ng-change="filterFriends(name)">-->
+        <!--</md-input-container>-->
+
+        <!--Friends list-->
+        <md-list>
+            <md-list-item ng-repeat="friend in friends | filter : filter" ng-click="friend.invited = !friend.invited">
+                <img ng-src="{{friend.picture_md}}" class="md-avatar" alt="">
+                <p>{{friend.username}}</p>
+                <md-checkbox class="md-secondary" ng-model="friend.invited"></md-checkbox>
+            </md-list-item>
+        </md-list>
+    </md-dialog-content>
+
+    <!--Filter input container-->
+    <md-input-container class="filter-input-container md-color grey hue-200 hover">
+        <label>Find by name or username</label>
+        <input type="text" ng-model="name" ng-change="filterFriends(name)">
+    </md-input-container>
+
+    <!--Action buttons-->
+    <md-dialog-actions layout="row" layout-align="end" layout-wrap>
+        <md-button type="button" ng-click="hide()">Cancel</md-button>
+        <md-button class="md-accent md-raised" type="button" ng-click="sendInvites()">
+            <i class="fa fa-send"></i> Send Invites
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

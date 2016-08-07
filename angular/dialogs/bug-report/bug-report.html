@@ -1,0 +1,18 @@
+<md-dialog class="Dialog Bug-report">
+	<form ng-submit="submit()">
+		<md-dialog-content>
+			<h2 class="md-title">Report a Bug</h2>
+
+			<md-input-container flex>
+        		<label>What went wrong?</label>
+				<textarea ng-model="formData.body" columns="1" md-maxlength="255" rows="4"></textarea>
+			</md-input-container>
+
+		</md-dialog-content>
+
+		<div class="md-actions" layout="row">
+			<md-button type="button" ng-click="hide()">Cancel</md-button>
+			<md-button class="md-primary md-raised" type="submit"><i class="fa fa-check"></i> Submit</md-button>
+		</div>
+	</form>
+</md-dialog>

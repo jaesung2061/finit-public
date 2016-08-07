@@ -1,0 +1,42 @@
+<div class="Page-Container Register" ng-controller="RegisterController" layout="row" layout-align="center">
+    <form ng-submit="register(registrationFormData)" novalidate flex="50" flex-sm="100">
+        <md-toolbar class="md-padding" layout="row" layout-align="center center">
+            Create an Account
+        </md-toolbar>
+        <md-content flex layout="row" layout-wrap layout-padding>
+            <validation errors="validationErrors" flex="100"></validation>
+
+            <!--EMAIL-->
+            <md-input-container flex="100">
+                <label>Email</label>
+                <input class="md-block" ng-model="registrationFormData.email" type="email" required>
+            </md-input-container>
+
+            <!--USERNAME-->
+            <md-input-container flex="100">
+                <label>Username</label>
+                <input class="md-block" ng-model="registrationFormData.username" type="text" required>
+            </md-input-container>
+
+            <!--PASSWORD-->
+            <md-input-container flex="100">
+                <label>Password</label>
+                <input class="md-block" ng-model="registrationFormData.password" type="password" required>
+            </md-input-container>
+
+            <!--PASSWORD CONFIRMATION-->
+            <md-input-container flex="100">
+                <label>Password Confirmation</label>
+                <input class="md-block" ng-model="registrationFormData.password_confirmation" type="password" required>
+            </md-input-container>
+
+            <div flex="100" layout="row" layout-align="space-between center" layout-align-sm="center">
+                <a ui-sref="app.privacy" target="_blank">Privacy Policy</a>
+
+                <md-button class="md-raised md-accent">
+                    <i class="fa fa-plus-square"></i> Make My Account
+                </md-button>
+            </div>
+        </md-content>
+    </form>
+</div>

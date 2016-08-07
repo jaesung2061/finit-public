@@ -1,0 +1,122 @@
+.Page-Container.Profile {
+    position: relative;
+    .column-user-info {
+        .avatar {
+            width: 100%;
+            height: auto;
+        }
+        @media only screen and (min-width: 768px) {
+            margin-bottom: 1em;
+        }
+    }
+    .user-options-icon {
+        position: absolute;
+        right: 1px;
+        bottom: 1px;
+        color: #fff;
+        display: inline-block;
+        padding: 6px;
+        cursor: pointer;
+        background-color: rgba(#000, .2);
+        border-top-left-radius: 6px;
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: rgba(#000, .7);
+            border-left: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+        }
+    }
+    .mobile .user-options-icon {
+        right: 16px;
+        bottom: 16px;
+        @media only screen and (max-width: 481px) {
+            right: 8px;
+            bottom: 8px;
+        }
+    }
+    .panel {
+        margin-bottom: 20px;
+        .panel-heading {
+            font-size: 18px;
+            padding: 4px;
+            min-height: inherit;
+            text-align: center;
+        }
+        .panel-body {
+            border: 1px solid #ccc;
+            border-top: none;
+            padding: 5px;
+        }
+    }
+    .friends,
+    .friends-mutual {
+        .panel-body {
+            height: 300px;
+        }
+    }
+    .bio {
+        max-height: none;
+    }
+    .profile-wall-container {
+        margin-bottom: 1em;
+        .wall-title {
+            margin-left: 1em;
+        }
+        md-toolbar {
+            min-height: inherit;
+        }
+        @media only screen and (min-width: 960px) {
+            padding-left: 10px;
+        }
+        hr {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        pager {
+            margin: 0 auto;
+        }
+    }
+    .box {
+        border: 1px solid rgb(103, 58, 183);
+        cursor: pointer;
+        &:hover {
+            background: rgba(68, 138, 255, .3);
+        }
+    }
+    .mobile {
+        .friendship-buttons-container {
+            margin-top: 1em;
+            p {
+                margin-bottom: 0;
+            }
+        }
+        .user-info-tabs {
+            margin-top: 1em;
+            md-tab-content {
+                margin-bottom: 1em;
+                border: 1px solid #ccc;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        .wall-box,
+        pager {
+            display: none;
+        }
+        .force-landscape {
+            display: block;
+        }
+    }
+
+    @media only screen and (min-width: 481px) {
+        .wall-box,
+        pager {
+            display: block;
+        }
+        .force-landscape {
+            display: none;
+        }
+    }
+}

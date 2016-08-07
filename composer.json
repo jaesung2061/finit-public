@@ -1,0 +1,73 @@
+{
+    "name": "jadjoubran/laravel5-angular-material-starter",
+    "description": "Laravel 5 angular material starter project with elixir setup",
+    "keywords": [
+        "laravel",
+        "angular",
+        "material",
+        "starter",
+        "ui-router",
+        "api"
+    ],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": "5.1.*",
+        "barryvdh/laravel-debugbar": "~2.0",
+        "tymon/jwt-auth": "0.5.*",
+        "dingo/api": "1.0.x@dev",
+        "barryvdh/laravel-cors": "0.7.x",
+        "laravel/socialite": "^2.0",
+        "laracasts/utilities": "^2.1",
+        "thomaswelton/laravel-gravatar": "^1.1",
+        "intervention/image": "^2.3",
+        "league/flysystem-rackspace": "^1.0",
+        "jenssegers/agent": "^2.3",
+        "doctrine/dbal": "^2.5",
+        "barryvdh/laravel-ide-helper": "^2.1",
+        "graham-campbell/throttle": "^5.1",
+        "nubs/random-name-generator": "^0.2.0",
+        "fzaninotto/faker": "~1.4",
+        "snowfire/beautymail": "dev-master",
+        "aws/aws-sdk-php": "^3.18"
+    },
+    "require-dev": {
+        "mockery/mockery": "0.9.*",
+        "phpunit/phpunit": "~4.0",
+        "phpspec/phpspec": "~2.1"
+    },
+    "autoload": {
+        "classmap": [
+            "database"
+        ],
+        "psr-4": {
+            "Finit\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php"
+        ]
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "php artisan clear-compiled",
+            "php artisan optimize"
+        ],
+        "post-update-cmd": [
+            "php artisan clear-compiled",
+            "php artisan optimize",
+            "php artisan ide-helper:generate"
+        ],
+        "post-create-project-cmd": [
+            "php -r \"copy('.env.example', '.env');\"",
+            "php -r \"unlink('code_of_conduct.md');\"",
+            "php -r \"unlink('CHANGELOG.md');\"",
+            "php -r \"unlink('.codeclimate.yml');\"",
+            "php -r \"unlink('.travis.yml');\"",
+            "php artisan key:generate",
+            "php artisan jwt:generate"
+        ]
+    }
+}

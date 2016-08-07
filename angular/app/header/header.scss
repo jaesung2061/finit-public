@@ -1,0 +1,69 @@
+.Header {
+    user-select: none;
+    z-index: 3;
+    cursor: default;
+    white-space: nowrap;
+    min-height: 64px;
+    button:first-child {
+        padding-top: 6px;
+    }
+    .nav-brand {
+        display: block;
+        height: 60px;
+        line-height: 60px;
+        max-height: 60px;
+        font-weight: 900;
+        font-size: 2.2em;
+        font-family: "Dosis", sans-serif;
+        color: #fff;
+        user-select: none;
+        &:hover,
+        &:active,
+        &:focus {
+            color: #fff;
+            text-decoration: none;
+            text-underline: none;
+        }
+        img {
+            height: 36px;
+            position: relative;
+            top: -7px;
+        }
+    }
+    .center-brand {
+        position: absolute;
+        left: 50%;
+        top: -5px;
+        transform: translateX(-50%);
+        img {
+            top: 0;
+        }
+    }
+    .nav-links a {
+        font-size: 16px;
+        padding: 10px;
+        &:last-child {
+            padding-right: 0;
+        }
+        &:hover,
+        &:active,
+        &:focus {
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+    .Page-Container {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    md-menu {
+        padding-right: 16px;
+    }
+    md-menu-content .md-button {
+        text-align: left;
+    }
+    .fa.fa-bars,
+    .fa.fa-caret-square-o-down {
+        font-size: 2em;
+    }
+}

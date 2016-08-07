@@ -1,0 +1,162 @@
+md-list[md-no-ink] > md-list-item .md-list-item-inner:hover {
+    background-color: rgba(#000, .15);
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+a {
+    color: #7C4DFF;
+    text-decoration: none;
+    &:hover {
+        color: #6200EA;
+    }
+    p & {
+        text-decoration: underline;
+    }
+}
+
+.md-block {
+    display: block;
+}
+
+.md-inline {
+    display: inline;
+}
+
+.md-inline-block {
+    display: inline-block;
+}
+
+.md-button.md-lg {
+    font-weight: 900;
+    font-size: 16px;
+    padding: 4px 14px;
+}
+
+.badge.red {
+    background: #F00;
+    color: #fff;
+}
+
+.border-top {
+    border-top: 1px solid #ccc;
+}
+
+.border-right {
+    border-right: 1px solid #ccc;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #ccc;
+}
+
+.border-left {
+    border-left: 1px solid #ccc;
+}
+
+.list-users {
+    list-style: none;
+    padding: 0;
+    > li {
+        a {
+            color: #000;
+            display: block;
+            padding: 3px 0;
+            &:hover,
+            &:focus,
+            &:active {
+                color: #000;
+                background: rgba(#000, .3);
+                text-decoration: none;
+            }
+        }
+        img {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+        }
+    }
+}
+
+md-input-container:hover {
+    background-color: rgba(#000, .1);
+    transition: all .4s ease-out;
+}
+
+.load-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #eee;
+    z-index: 500;
+}
+
+md-toolbar {
+    min-height: inherit;
+}
+
+.overlay-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+
+.anchor {
+    display: block;
+    cursor: pointer;
+    padding: 6px;
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: rgba(#000, .3);
+    }
+}
+
+.ft-chip {
+    border-radius: 20px;
+    padding: 0 0 0 10px;
+    margin: 4px;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    white-space: nowrap;
+    .fa {
+        text-align: center;
+        height: 30px;
+        width: 26px;
+        line-height: 30px;
+        display: inline-block;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        padding-right: 3px;
+        &:hover {
+            background-color: rgba(#000, .3);
+        }
+    }
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #ccc;
+}
+
+@media (min-width: 600px) {
+    md-toolbar.md-padding {
+        padding: 8px 16px;
+    }
+}
+
+article {
+    font-size: 18px;
+    line-height: 38px;
+}

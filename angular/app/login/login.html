@@ -1,0 +1,49 @@
+<div class="Page-Container Login" ng-controller="LoginCtrl" layout="row" layout-wrap layout-align="center">
+    <md-content flex="100" flex-gt-lg="50">
+        <md-toolbar class="md-padding" layout="row" layout-align="center center">
+            Sign in to Your Account
+        </md-toolbar>
+        <div layout="row" layout-wrap>
+            <!--<div id="announcement" class="md-color red hue-50 md-padding spacer-bottom" flex="100">-->
+                <!--<h4 class="text-center">-->
+                    <!--<strong>Announcement:</strong>-->
+                    <!--<br>-->
+                    <!--Unfortunately, technical difficulties forced us to restore a backup made on April 10th, 2016.-->
+                    <!--As a result, if you made an account between April 10th to April 13th, it will have been lost.-->
+                    <!--We apologize for the inconvenence.-->
+                <!--</h4>-->
+            <!--</div>-->
+            <form flex ng-submit="login(loginFormData)" novalidate layout-padding>
+                <validation errors="validationErrors"></validation>
+
+                <!--EMAIL OR USERNAME-->
+                <md-input-container>
+                    <label>Email</label>
+                    <input class="md-block" ng-model="loginFormData.email" type="text" required>
+                </md-input-container>
+
+                <!--PASSWORD-->
+                <md-input-container>
+                    <label>Password</label>
+                    <input class="md-block" ng-model="loginFormData.password" type="password" required>
+                </md-input-container>
+
+                <!--SUBMIT BUTTON-->
+                <div flex layout="row" layout-align="space-between center" layout-align-sm="center">
+                    <md-checkbox ng-model="loginFormData.remember" aria-label="Remember me">
+                        Remember me
+                    </md-checkbox>
+
+                    <button type="submit" class="md-button md-raised md-accent">
+                        <i class="fa fa-sign-in"></i> Sign In
+                    </button>
+                </div>
+
+                <!--FORGOT PASS-->
+                <div flex>
+                    <a ui-sref="app.forgot-password">Forgot password?</a>
+                </div>
+            </form>
+        </div>
+    </md-content>
+</div>

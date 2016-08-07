@@ -1,0 +1,13 @@
+.Bottom-Sheet.Emojis {
+    border-right: 1px solid #ccc;
+    .emoji {
+        display: inline-block;
+        font-size: 26px;
+        margin-right: 4px;
+        margin-bottom: 4px;
+        float: left;
+    }
+    .md-button:first-of-type {
+        margin-left: 100px;
+    }
+}

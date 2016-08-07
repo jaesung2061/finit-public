@@ -1,0 +1,26 @@
+<div class="Page-Container" ng-controller="EmailResetController" layout="row" layout-align="center">
+    <md-content ng-if="!resetNotFound" flex="50">
+        <md-toolbar class="text-center md-padding">Email reset</md-toolbar>
+        <md-content class="md-padding">
+            <p>
+                You have requested to reset your email to:
+                <b>{{ email_new }}</b>.
+            </p>
+
+            <form ng-submit="submit()" class="text-right">
+                <md-button type="submit" class="md-primary">Cancel</md-button>
+                <md-button type="submit" class="md-raised md-primary">Confirm Reset</md-button>
+            </form>
+        </md-content>
+    </md-content>
+
+    <md-content class="md-padding" ng-if="resetNotFound" flex="50">
+        <h1 class="text-center">Email reset</h1>
+
+        <p>
+            <big>
+                Email reset has expired.
+            </big>
+        </p>
+    </md-content>
+</div>

@@ -1,0 +1,73 @@
+<div ng-if="!box.photo">
+    <div class="box-header">
+        <a ui-sref="app.profile({username: box.giver.username})">
+            <img ng-src="{{box.giver.picture_xs}}">
+            {{box.giver.username}}
+        </a>
+        <md-menu md-position-mode="target-right target">
+            <a href aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)" ng-show="isSelf || box.giver.id === currentUser.id">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <md-menu-content width="2" ng-show="isSelf || box.giver.id === currentUser.id">
+                <md-menu-item>
+                    <md-button ng-click="deleteBox(box)">
+                        <i class="fa fa-minus-circle"></i>
+                        Delete
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <div class="box-content text">
+        {{box.body}}
+    </div>
+    <div class="box-footer" layout="row">
+        <a href flex="25" ng-click="likeBox(box)" ng-class="{'is-liked': box.currentUserLiked}">
+            {{box.starsCount || ''}}
+            <i class="fa fa-thumbs-up"></i>
+        </a>
+        <!--<a href flex="25">-->
+        <!--12-->
+        <!--<i class="fa fa-comments"></i>-->
+        <!--</a>-->
+        <span flex layout="row" layout-align="end">{{box.time_ago}}</span>
+    </div>
+</div>
+
+<div ng-if="!!box.photo" class="photo" style="background-image: url({{box.photo.url}})">
+    <div>
+        <div class="box-header">
+            <a ui-sref="app.profile({username: box.giver.username})">
+                <img ng-src="{{box.giver.picture_xs}}">
+                {{box.giver.username}}
+            </a>
+            <md-menu md-position-mode="target-right target" ng-if="isSelf || box.giver.id === currentUser.id">
+                <a href aria-label="Open phone interactions menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+                <md-menu-content width="2">
+                    <md-menu-item>
+                        <md-button ng-click="deleteBox(box)">
+                            <i class="fa fa-minus-circle"></i>
+                            Delete
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+        <div class="box-content text">
+            {{box.body}}
+        </div>
+        <div class="box-footer" layout="row">
+            <a href flex="25" ng-click="likeBox(box)" ng-class="{'is-liked': box.currentUserLiked}">
+                {{box.starsCount || ''}}
+                <i class="fa fa-thumbs-up"></i>
+            </a>
+            <!--<a href flex="25">-->
+            <!--12-->
+            <!--<i class="fa fa-comments"></i>-->
+            <!--</a>-->
+            <span flex layout="row" layout-align="end">{{box.time_ago}}</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="image-cropper" ng-if="!cropOptions.small">
+    <div class="crop-placeholder" ng-show="!cropOptions.sourceImage">
+        <h1>
+            <i class="fa fa-picture-o"></i>
+        </h1>
+    </div>
+    <canvas width="400"
+            height="400"
+            image-cropper
+            image="cropOptions.sourceImage"
+            cropped-image="cropOptions.croppedImage"
+            crop-width="cropOptions.width"
+            crop-height="cropOptions.height"
+            keep-aspect="true"
+            touch-radius="30"
+            crop-area-bounds="bounds"></canvas>
+</div>
+<div class="image-cropper" ng-if="cropOptions.small">
+    <div class="crop-placeholder" ng-show="!cropOptions.sourceImage">
+        <h1>
+            <i class="fa fa-picture-o"></i>
+        </h1>
+    </div>
+    <canvas width="200"
+            height="200"
+            image-cropper
+            image="cropOptions.sourceImage"
+            cropped-image="cropOptions.croppedImage"
+            crop-width="cropOptions.width"
+            crop-height="cropOptions.height"
+            keep-aspect="true"
+            touch-radius="30"
+            crop-area-bounds="bounds"></canvas>
+</div>

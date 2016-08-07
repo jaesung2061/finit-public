@@ -1,0 +1,111 @@
+<div class="Page-Container" ng-class="{'max-width-full': $state.is('app.chat.show')}">
+    <div class="md-toolbar-tools">
+        <md-button ng-click="openSideNav()"
+                   hide-gt-md
+                   class="md-icon-button"
+                   aria-label="Show Menu">
+            <i class="fa fa-bars"></i>
+        </md-button>
+
+        <!--BRAND-->
+        <a class="nav-brand" ui-sref="app.home" ng-class="{'center-brand': $mdMedia('sm')}">
+            <img src="/images/finit-white.png" alt>
+            <span hide-sm>Finit.co</span>
+        </a>
+
+        <!--NAV LINKS LOGGED IN-->
+        <div flex hide show-gt-sm layout="row" layout-align="end" class="nav-links" ng-if="currentUser">
+            <a ui-sref="app.users">
+                <i class="fa fa-users"></i>
+                Find People
+            </a>
+            <a ui-sref="app.settings" ng-if="!currentUser.is_temp">
+                <i class="fa fa-wrench"></i>
+                Settings
+            </a>
+            <a ui-sref="app.updates">
+                <i class="fa fa-newspaper-o"></i>
+                Updates
+            </a>
+            <a href="https://blog.finit.co">
+                <i class="fa fa-graduation-cap"></i>
+                Blog
+            </a>
+            <a href ng-click="logout()">
+                <i class="fa fa-sign-out"></i>
+                Sign Out
+            </a>
+        </div>
+
+        <!--NAV LINKS LOGGED OUT-->
+        <div flex hide show-gt-sm layout="row" layout-align="end" class="nav-links" ng-if="!currentUser">
+            <a ui-sref="app.login">
+                <i class="fa fa-sign-in"></i>
+                Sign In
+            </a>
+            <a href ng-click="$state.go('app.register')">
+                <i class="fa fa-plus-square"></i>
+                Register
+            </a>
+            <a href ng-click="openDialog('bug-report')" title="Report a bug">
+                <i class="fa fa-bug"></i>
+                Bug
+            </a>
+        </div>
+
+        <!--MENU LOGGED IN-->
+        <md-menu md-position-mode="target-right target" md-offset="-20 72" hide-gt-sm>
+            <md-button aria-label="Open menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                <i class="fa fa-caret-square-o-down"></i>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item ng-if="!currentUser">
+                    <md-button ng-click="$state.go('app.login')">
+                        <i class="fa fa-sign-in"></i>
+                        Sign In
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item ng-if="!currentUser">
+                    <md-button ng-click="$state.go('app.register')">
+                        <i class="fa fa-plus-square"></i>
+                        Register
+                    </md-button>
+                </md-menu-item>
+
+                <!--Only logged in-->
+                <md-menu-item>
+                    <md-button ng-click="$state.go('app.chat')">
+                        <i class="fa fa-comments"></i>
+                        Chat
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item ng-if="currentUser && !currentUser.is_temp">
+                    <md-button ng-click="$state.go('app.settings')">
+                        <i class="fa fa-wrench"></i>
+                        Settings
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="$state.go('app.users')">
+                        <i class="fa fa-users"></i>
+                        Find People
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="https://blog.finit.co">
+                        <i class="fa fa-graduation-cap"></i>
+                        Blog
+                    </md-button>
+                </md-menu-item>
+                <md-divider ng-if="currentUser"></md-divider>
+                <md-menu-item ng-if="currentUser">
+                    <md-button ng-click="logout()">
+                        <i class="fa fa-sign-out"></i>
+                        Sign Out
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <div class="clearfix"></div>
+</div>

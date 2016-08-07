@@ -1,0 +1,20 @@
+Validation {
+    padding: 0!important;
+    md-toolbar {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        font-size: 16px;
+        margin-bottom: 10px;
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        button.close {
+            font-size: 28px;
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+    }
+}

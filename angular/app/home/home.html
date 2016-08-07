@@ -1,0 +1,29 @@
+<div class="Page-Container Home" ng-controller="HomeController" layout="row" layout-align="center" layout-wrap>
+    <md-content flex="100" flex-gt-lg="50">
+        <md-toolbar class="md-padding" layout-align="center center">
+            Join a Chat
+        </md-toolbar>
+        <md-content class="md-padding">
+            <form ng-submit="joinChat(joinFormData)" novalidate>
+                <!--HASHTAG-->
+                <md-input-container>
+                    <label>#Hashtag</label>
+                    <input class="md-block" ng-model="joinFormData.hashtag" type="text" required>
+                </md-input-container>
+
+                <!--USERNAME-->
+                <md-input-container ng-if="!currentUser">
+                    <label>Username</label>
+                    <input class="md-block" ng-model="joinFormData.username" type="text" required>
+                </md-input-container>
+
+                <!--SUBMIT BUTTOM-->
+                <div layout="row" layout-align="end center" layout-align-sm="center center">
+                    <md-button class="md-raised md-accent">
+                        <i class="fa fa-comments"></i> Join Chat
+                    </md-button>
+                </div>
+            </form>
+        </md-content>
+    </md-content>
+</div>

@@ -1,0 +1,26 @@
+<div class="Page-Container Site-Map" ng-controller="SiteMapController" layout="row" layout-align="center" layout-wrap>
+    <div flex="50" flex-sm="100">
+        <h3>Hashtags</h3>
+
+        <ul>
+            <li ng-repeat="chatroom in chatrooms">
+                <a href="https://finit.co/chat/{{chatroom.channel.substr(4)}}">
+                    <p>#{{chatroom.channel.substr(4).capitalizeFirstLetter()}} chat</p>
+                    <p>{{chatroom.description_ahort}}</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div flex="50" flex-sm="100">
+        <h3>Pages</h3>
+
+        <ul>
+            <li><a href="https://finit.co/contact">Contact</a></li>
+            <li><a href="https://finit.co/about">About</a></li>
+            <li><a href="https://finit.co/privacy">Privacy</a></li>
+            <li><a href="https://finit.co/updates">Updates</a></li>
+            <li><a href="https://finit.co/claim">Claim</a></li>
+            <li><a href="https://blog.finit.co/">Blog</a></li>
+        </ul>
+    </div>
+</div>

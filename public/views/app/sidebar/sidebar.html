@@ -1,0 +1,179 @@
+<div ng-if="!currentUser.is_temp">
+    <md-list ng-if="!currentUser">
+        <div ui-sref-active="active" ui-sref="app.home" class="Sidebar-page">
+            <md-list-item md-ink-ripple>
+                <i class="fa fa-home"></i> Home
+            </md-list-item>
+        </div>
+        <div ui-sref-active="active" ui-sref="app.login" class="Sidebar-page">
+            <md-list-item md-ink-ripple>
+                <i class="fa fa-sign-in"></i> Sign In
+            </md-list-item>
+        </div>
+        <div ui-sref-active="active" ui-sref="app.register" class="Sidebar-page">
+            <md-list-item md-ink-ripple>
+                <i class="fa fa-plus-circle"></i> Create an Account
+            </md-list-item>
+        </div>
+    </md-list>
+
+    <div layout="row" class="inline-list Sidebar-list-nav" flex="100" ng-if="currentUser">
+        <a href flex="25" ng-class="{active: list === 'friends'}" ng-click="changeList('friends')">
+            <i class="fa fa-users"></i>
+            <md-tooltip md-delay="0" md-direction="bottom">
+                Friends
+            </md-tooltip>
+        </a>
+        <a href flex="25" ng-class="{active: list === 'requests'}" ng-click="changeList('requests')">
+            <i class="fa fa-user-plus"></i>
+            <i class="badge red" ng-show="friendRequests.length > 0">{{friendRequests.length}}</i>
+            <md-tooltip md-delay="0" md-direction="bottom">
+                Friend requests
+            </md-tooltip>
+        </a>
+        <a href flex="25" ng-class="{active: list === 'notifications'}" ng-click="changeList('notifications')">
+            <i class="fa fa-bell"></i>
+            <i class="badge red" ng-show="notifications.meta.total > 0">{{notifications.meta.total}}</i>
+            <md-tooltip md-delay="0" md-direction="bottom">
+                Notifications
+            </md-tooltip>
+        </a>
+        <a href flex="25" ng-class="{active: list === 'chat'}" ng-click="changeList('chat')">
+            <i class="fa fa-comments-o"></i>
+            <i class="badge red" ng-show="unread_messages.total > 0">{{unread_messages.total}}</i>
+            <md-tooltip md-delay="0" md-direction="bottom">
+                Hashtags
+            </md-tooltip>
+        </a>
+    </div>
+
+    <div ng-if="currentUser">
+        <!--Friends-->
+        <div ng-show="list === 'friends'">
+            <h4 class="text-center">Friends</h4>
+
+            <ul class="Sidebar-list friends">
+                <li class="md-button md-raised md-primary" ng-if="friends.length === 0" ng-click="$state.go('app.users')">Find People</li>
+                <li ng-repeat="friend in friends">
+                    <md-menu md-offset="230 4">
+                        <a href="/@{{friend.username}}" ng-click="openMenu($mdOpenMenu, $event)" ng-class="{'is-online': friend.isOnline}">
+                            <img ng-src="{{friend.picture_xs}}" alt>
+                            {{friend.username}}
+                            <i class="fa fa-wifi"></i>
+                        </a>
+                        <md-menu-content width="4">
+                            <md-menu-item>
+                                <button type="button" class="md-button md-default-theme" ng-click="$state.go('app.profile', {username: friend.username})">
+                                    <img width="24" height="24" ng-src="{{friend.picture_xs}}" alt>
+                                    View Profile
+                                </button>
+                            </md-menu-item>
+                            <md-menu-divider></md-menu-divider>
+                            <md-menu-item>
+                                <button type="button" class="md-button md-default-theme" ng-click="$state.go('app.chat.show', {title: '@' + friend.username})">
+                                    Chat
+                                </button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </li>
+            </ul>
+        </div>
+
+        <!--Requests-->
+        <div ng-show="list === 'requests'">
+            <h4 class="text-center">Requests</h4>
+
+            <ul class="Sidebar-list requests">
+                <li class="text-center big" ng-if="friendRequests.length === 0">All clear...</li>
+                <li ng-repeat="requester in friendRequests">
+                    <a ui-sref="app.profile({username: requester.username})">
+                        <img ng-src="{{requester.picture_xs}}" alt>
+                        {{requester.username}}
+                    </a>
+                <span class="buttons-container">
+                    <a href class="fa fa-check-circle" ng-click="acceptRequest(requester.id)"></a>
+                    <a href class="fa fa-times-circle" ng-click="declineRequest(requester.id)"></a>
+                </span>
+                </li>
+            </ul>
+        </div>
+
+        <!--Notifications-->
+        <div ng-show="list === 'notifications'">
+            <h4 class="text-center">Notifications</h4>
+
+            <p class="text-center big" ng-if="notifications.length === 0">All clear...</p>
+
+            <ul class="Sidebar-list notifications">
+                <li ng-repeat="notification in notifications">
+                    <a href ng-click="notificationAction(notification)">
+                        {{notification.event_info}}
+                    </a>
+                </li>
+                <li class="md-button md-raised md-primary" ng-click="getNotifications()" ng-if="notifications.meta.current_page < notifications.meta.last_page">
+                    View More
+                </li>
+            </ul>
+        </div>
+
+        <!--Chatrooms-->
+        <div ng-show="list === 'chat'">
+            <form class="join-chat" ng-submit="joinChat({title: newRoomTitle});newRoomTitle = ''">
+                <md-input-container md-no-float style="padding-bottom: 10px;">
+                    <input type="text" ng-model="newRoomTitle" placeholder="Join a Chat" style="color: #fff;" autocomplete="off">
+                </md-input-container>
+                <div layout="row" layout-align="end">
+                    <md-button class="md-raised md-accent" type="submit"><i class="fa fa-check"></i> Join</md-button>
+                </div>
+            </form>
+
+            <md-list class="Sidebar-list chatrooms">
+                <md-list-item class="md-2-line" ng-repeat="chatroom in chatrooms" ng-click="joinChat(chatroom)">
+                    <div class="md-list-item-text">
+                        <h3>{{chatroom.title}}</h3>
+                        <p>{{chatroom.unread_messages_count > 0 ? chatroom.unread_messages_count : 'No'}} new messages.</p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="sidebar-form" ng-if="currentUser.is_temp" layout-padding>
+    <h4>Claim your username.</h4>
+    <ul>
+        <li>Get a profile page</li>
+        <li>Add friends</li>
+        <li>Save your favorite hashtags</li>
+        <li>Access the sidebar</li>
+    </ul>
+    <div class="text-center">
+        <md-button class="md-raised md-accent" ng-click="openDialog('create-account')">
+            <i class="fa fa-plus-circle"></i> Make My Account
+        </md-button>
+    </div>
+
+    <!--Chatrooms-->
+    <div ng-show="list === 'chat'">
+        <form class="join-chat" ng-submit="joinChat({title: newRoomTitle});newRoomTitle = ''">
+            <md-input-container md-no-float style="padding-bottom: 10px;">
+                <input type="text" ng-model="newRoomTitle" placeholder="Join a Chat" style="color: #fff;" autocomplete="off">
+            </md-input-container>
+            <div layout="row" layout-align="end">
+                <md-button class="md-raised md-accent" type="submit"><i class="fa fa-check"></i> Join</md-button>
+            </div>
+        </form>
+
+        <md-list class="Sidebar-list chatrooms">
+            <md-list-item class="md-2-line" ng-repeat="chatroom in chatrooms" ng-click="joinChat(chatroom)">
+                <div class="md-list-item-text">
+                    <h3>{{chatroom.title}}</h3>
+                    <p>{{chatroom.unread_messages_count > 0 ? chatroom.unread_messages_count : 'No'}} new messages.</p>
+                </div>
+            </md-list-item>
+        </md-list>
+    </div>
+</div>

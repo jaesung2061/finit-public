@@ -1,0 +1,12 @@
+md-toast {
+    position: fixed;
+}
+
+md-toast[md-theme=primary] {
+    background-color: #2196F3;
+}
+
+md-toast[md-theme=warn] {
+    background-color: #F44336;
+    border-radius: 2px;
+}

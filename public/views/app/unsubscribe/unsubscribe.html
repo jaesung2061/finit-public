@@ -1,0 +1,20 @@
+<md-content class="Page-Container" ng-controller="UnsubscribeController" layout="row" layout-align="center">
+    <md-content flex="50" flex-sm="100">
+        <md-toolbar class="text-center md-padding">Unsubscribe</md-toolbar>
+        <md-content class="md-padding">
+            <p>
+                To unsubscribe from emails, please enter your email address.
+            </p>
+
+            <form ng-submit="submit()">
+                <md-input-container>
+                    <label>Email</label>
+                    <input type="email" ng-model="email">
+                </md-input-container>
+                <div class="text-right">
+                    <md-button type="submit" class="md-raised md-primary">Unsubscribe</md-button>
+                </div>
+            </form>
+        </md-content>
+    </md-content>
+</md-content>

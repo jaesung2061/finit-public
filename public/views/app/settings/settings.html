@@ -1,0 +1,125 @@
+<div class="Page-Container" ng-controller="SettingsController" layout="row" layout-wrap layout-align="center">
+    <div flex="100" flex-gt-lg="50">
+        <md-toolbar class="md-padding" layout="row" layout-align="center center">
+            Settings
+        </md-toolbar>
+        <md-content>
+            <validation errors="errors" flex="100"></validation>
+
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="Profile">
+                    <!--Profile Picture-->
+                    <div>
+                        <h4 class="text-center">Profile Picture</h4>
+
+                        <img-crop crop-options="cropOptions" ng-if="cropperReady"></img-crop>
+
+                        <!--Placeholder-->
+                        <div class="image-cropper" ng-hide="cropperReady">
+                            <div class="crop-placeholder">
+                                <h1>
+                                    <i class="fa fa-picture-o"></i>
+                                </h1>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <p>Photos with small dimensions may not crop properly.</p>
+                            <md-button ngf-select ngf-change="onFileSelect($files)" accept="image/*" class="md-raised md-accent" ng-class="{selected: !!cropOptions.croppedImage}">
+                                <i class="fa fa-camera"></i> Select Photo
+                            </md-button>
+                            <md-button class="md-raised md-primary" ng-click="uploadPhoto()">
+                                <i class="fa fa-check"></i> Upload
+                            </md-button>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <form class="md-padding" layout="row" layout-wrap ng-submit="submit(formData, 'profile')">
+                        <h4 class="text-center" flex="100">About Me</h4>
+
+                        <!--Website-->
+                        <md-input-container flex="100">
+                            <label>Website</label>
+                            <input ng-model="formData.website">
+                        </md-input-container>
+
+                        <!--Bio-->
+                        <md-input-container flex="100">
+                            <label>Bio</label>
+                            <textarea ng-model="formData.bio" columns="1" md-maxlength="255"></textarea>
+                        </md-input-container>
+
+                        <div flex="100" layout="row" layout-align="end">
+                            <md-button class="md-primary md-raised" type="submit">
+                                <i class="fa fa-check"></i> Save
+                            </md-button>
+                        </div>
+                    </form>
+                </md-tab>
+                <md-tab label="Account">
+                    <md-content class="md-padding" layout="row" layout-align="center" layout-wrap>
+                        <h4 flex="100">Privacy</h4>
+
+                        <md-switch flex="100" ng-model="privacy" aria-label="Privacy">
+                            Make profile private
+                        </md-switch>
+
+                        <hr flex="100">
+
+                        <h4 flex="100">Change Your Email Address</h4>
+
+                        <!--New Email-->
+                        <md-input-container flex="50">
+                            <label>New Email</label>
+                            <input ng-model="formData.email_new">
+                        </md-input-container>
+
+                        <!--New Email Confirmation-->
+                        <md-input-container flex="50">
+                            <label>Email Confirmation</label>
+                            <input ng-model="formData.email_new_confirmation">
+                        </md-input-container>
+
+                        <!--Password-->
+                        <md-input-container flex="100">
+                            <label>Current Password</label>
+                            <input type="password" ng-model="formData.password">
+                        </md-input-container>
+
+                        <div flex="100" layout="row" layout-align="end">
+                            <md-button class="md-primary md-raised" ng-click="submit(formData, 'email')">Send Confirmation Email</md-button>
+                        </div>
+
+                        <hr flex="100">
+
+                        <h4 flex="100">Change Your Password</h4>
+
+                        <!--Current Password-->
+                        <md-input-container flex="100">
+                            <label>Current Password</label>
+                            <input type="password" ng-model="formData.password_current">
+                        </md-input-container>
+
+                        <!--New Password-->
+                        <md-input-container flex="50">
+                            <label>New Password</label>
+                            <input type="password" ng-model="formData.password_new">
+                        </md-input-container>
+
+                        <!--New Password Confirmation-->
+                        <md-input-container flex="50">
+                            <label>Password Confirmation</label>
+                            <input type="password" ng-model="formData.password_new_confirmation">
+                        </md-input-container>
+
+                        <div flex="100" layout="row" layout-align="end">
+                            <md-button class="md-primary md-raised" ng-click="submit(formData, 'password')">Send Confirmation Email</md-button>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </div>
+</div>

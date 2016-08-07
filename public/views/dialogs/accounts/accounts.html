@@ -1,0 +1,56 @@
+<md-dialog class="Dialog Accounts" layout-padding>
+    <md-dialog-content>
+        <md-tabs md-stretch-tabs="always" md-dynamic-height>
+            <md-tab>
+                <md-tab-label>Chat</md-tab-label>
+                <md-content>
+                    <h3 class="text-center">Select a Username</h3>
+
+                    <validation errors="errors"></validation>
+
+                    <form ng-submit="selectUsernameAndJoin(formData)">
+                        <md-input-container>
+                            <label>Username</label>
+                            <input type="text" ng-model="formData.username" ng-keyup="$log.log(formData)" md-autofocus>
+                        </md-input-container>
+
+                        <div layout="row" layout-align="space-between center">
+                            <md-button type="button" ng-click="hide('cancel')">
+                                <i class="fa fa-times"></i> Cancel
+                            </md-button>
+                            <md-button type="submit" class="md-raised md-primary">
+                                <i class="fa fa-check"></i> Chat
+                            </md-button>
+                        </div>
+                    </form>
+                </md-content>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>Sign In</md-tab-label>
+                <md-content>
+                    <form ng-submit="loginAndJoin(loginFormData)">
+                        <h3 class="text-center">Select a Username</h3>
+
+                        <validation errors="errors"></validation>
+
+                        <md-input-container>
+                            <label>Email</label>
+                            <input type="email" ng-model="loginFormData.email">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Password</label>
+                            <input type="password" ng-model="loginFormData.password">
+                        </md-input-container>
+                        <div layout="row" layout-align="space-between center">
+                            <md-button type="button" ng-click="hide('cancel')">
+                                <i class="fa fa-times"></i> Cancel
+                            </md-button>
+                            <a href ng-click="goToForgotPasswordPage()">Forgot password?</a>
+                            <md-button type="submit" class="md-raised md-accent">Login</md-button>
+                        </div>
+                    </form>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+</md-dialog>

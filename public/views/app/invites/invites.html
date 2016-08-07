@@ -1,0 +1,12 @@
+<div class="Page-Container Invites" ng-controller="InvitesController" layout="row" layout-wrap layout-align="center">
+    <md-content flex="100" flex-gt-lg="50">
+        <md-toolbar class="md-padding" layout="row" layout-align="center center">
+            Invites
+        </md-toolbar>
+        <md-list>
+            <md-list-item ng-repeat="invite in invites">
+                {{invite.requester.username}}
+            </md-list-item>
+        </md-list>
+    </md-content>
+</div>

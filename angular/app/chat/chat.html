@@ -1,0 +1,102 @@
+<div class="Page-Container Chat" ng-controller="ChatController" layout="row" layout-wrap layout-align="center">
+    <div flex="100">
+        <!--<div id="announcement" class="md-color red hue-50 md-padding spacer-bottom">-->
+            <!--<h4 class="text-center">-->
+                <!--Elegant works of Art.-->
+                <!--<br>-->
+                <!--By Redditors, for Finitors.-->
+                <!--<br>-->
+                <!--<strong><a href="https://i.imgur.com/qZFcKBY.png" data-lightbox="finit-gold" data-title="By @Preston">Finit Gold</a></strong>,-->
+                <!--<strong><a href="https://i.imgur.com/xzhCY6C.png" data-lightbox="finit-gold" data-title="by @RedisForever">Finit Gold 3D</a></strong>-->
+                <!--and-->
+                <!--<strong><a href="https://i.imgur.com/rFqCE58.png" data-lightbox="finit-gold" data-title="by @RedisForever">Finit Gold 3D v2</a></strong>!-->
+            <!--</h4>-->
+        <!--</div>-->
+        <md-content layout="row" layout-wrap>
+
+            <div flex="100" flex-gt-md="30">
+                <md-toolbar class="md-primary md-padding" layout="row" layout-align="center center">
+                    Chat
+                </md-toolbar>
+                <form ng-submit="joinChat(joinFormData)" novalidate layout-padding>
+                    <validation errors="errors"></validation>
+
+                    <!--USERNAME-->
+                    <md-input-container ng-if="!currentUser">
+                        <label>Select a username</label>
+                        <input ng-model="joinFormData.username" type="text" md-maxlength="30" required>
+                    </md-input-container>
+
+                    <!--HASHTAG-->
+                    <md-input-container>
+                        <label>Join or create a #hashtag</label>
+                        <input ng-model="joinFormData.channel" type="text" md-maxlength="30" required>
+                    </md-input-container>
+
+                    <!--SUBMIT BUTTOM-->
+                    <div layout="row" layout-align="end center">
+                        <md-button ui-sref="app.create-room" class="md-primary">
+                            <i class="fa fa-lock"></i> Private
+                        </md-button>
+                        <md-button type="submit" class="md-raised md-primary">
+                            <i class="fa fa-check"></i> Chat
+                        </md-button>
+                    </div>
+                </form>
+
+                <div flex="100" flex-gt-md="20" layout-padding>
+                    <ul class="sidenav" layout="row" layout-wrap>
+                        <li flex="100" flex-md="50"><a ui-sref="app.about">What is this?</a></li>
+                        <li flex="100" flex-md="50"><a href="https://blog.finit.co">Blog</a></li>
+                        <li flex="100" flex-md="50"><a ui-sref="app.updates">Change Log</a></li>
+                        <li flex="100" flex-md="50"><a ui-sref="app.commands">Chat Commands</a></li>
+                        <li flex="100" flex-md="50"><a ui-sref="app.claim">Claim a Hashtag</a></li>
+                        <li flex="100" flex-md="50"><a ui-sref="app.contact">Contact</a></li>
+                        <li flex="100" flex-md="50"><a ui-sref="app.privacy">Privacy</a></li>
+                        <li flex="100" flex-md="50"><a ui-sref="app.site-map">Site Map</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--ACTIVE-->
+            <div flex="100" flex-gt-md="70">
+
+                <div class="active-chatrooms" layout="row" layout-wrap>
+                    <!--CURRENT USER'S OWN CHATROOM-->
+                    <div ng-if="currentUser && currentUser.chatroom" class="active-chatroom current-users-chatroom" flex="25" flex-md="33" flex-sm="100">
+                        <a ui-sref="app.chat.show({title: currentUser.chatroom.title})">
+                            <img ng-src="{{::currentUser.chatroom.image || '/images/finit.png'}}" alt="{{::currentUser.chatroom.title}}">
+                        </a>
+                        <h4>
+                            <a ui-sref="app.chat.show({title: currentUser.chatroom.title})">
+                                <strong>#{{::currentUser.chatroom.title}}</strong>
+                            </a>
+                        </h4>
+                        <p>
+                            <strong>[Your hashtag]</strong>
+                            <br>
+                            {{::currentUser.chatroom.description_short || '[No description yet]'}}
+                        </p>
+                    </div>
+
+                    <!--ACTIVE CHATROOMS-->
+                    <div class="active-chatroom" ng-repeat="chatroom in savedChatrooms | orderBy: '-member_count'" flex="25" flex-md="33" flex-sm="100">
+                        <a ui-sref="app.chat.show({title: chatroom.title})">
+                            <img ng-src="{{::chatroom.image || '/images/finit.png'}}" alt="{{::chatroom.title}}">
+                        </a>
+                        <h4>
+                            <a ui-sref="app.chat.show({title: chatroom.title})">
+                                <strong>#{{::chatroom.title}}</strong>
+                            </a>
+                        </h4>
+                        <p>
+                            <strong>{{::chatroom.member_count || 'No'}} members active</strong>
+                            <br>
+                            {{::chatroom.description_short}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+    </div>
+</div>

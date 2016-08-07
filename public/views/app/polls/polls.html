@@ -1,0 +1,36 @@
+<div class="Page-Container Polls" ng-controller="PollsController" layout="row" layout-align="center">
+    <div flex="80" flex-sm="100" flex-gt-lg="60" layout="row" layout-wrap layout-padding>
+        <h3 flex="100">Polls for #{{title}}</h3>
+
+        <pager flex="100"
+               class="polls-pager"
+               ng-show="polls.length > 0 && !(polls.meta.current_page === 1 && polls.meta.current_page === polls.meta.last_page)"
+               meta-data="polls.meta"
+               pager-buttons="null"
+               pager-action="changePage"
+               theme="md-color grey hue-200">
+        </pager>
+
+        <div class="poll" flex="50" flex-sm="100" ng-repeat="poll in polls">
+            <h4 class="text-center"><strong>{{poll.question}}</strong></h4>
+            <!--POLL VOTES GRAPH-->
+            <div class="text-center">
+                <div ng-repeat="option in poll.options1 track by $index">
+                    <span>{{option}}</span>
+                    <uib-progressbar animate="false" value="poll.votePercentages[$index + 1]" theme="md-color blue">
+                        <span>{{poll.votes[$index + 1]}}|{{(poll.votePercentages[$index + 1]) | number : 0}}%</span>
+                    </uib-progressbar>
+                </div>
+            </div>
+        </div>
+
+        <pager flex="100"
+               class="polls-pager"
+               ng-show="polls.length > 0 && !(polls.meta.current_page === 1 && polls.meta.current_page === polls.meta.last_page)"
+               meta-data="polls.meta"
+               pager-buttons="null"
+               pager-action="changePage"
+               theme="md-color grey hue-200">
+        </pager>
+    </div>
+</div>

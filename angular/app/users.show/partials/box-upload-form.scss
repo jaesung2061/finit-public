@@ -1,0 +1,25 @@
+.box-upload-form {
+    .color-selection {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        div {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            border: 1px solid #999;
+            margin-left: -1px;
+            text-align: center;
+            line-height: 29px;
+            fa {
+                display: none;
+            }
+            &.selected {
+                border: 2px solid #000;
+                z-index: 1;
+                fa {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

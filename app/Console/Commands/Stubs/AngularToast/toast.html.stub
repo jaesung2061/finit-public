@@ -1,0 +1,6 @@
+<md-toast class="{{DirectiveName}}">
+    <span flex>{{StudlyName}}</span>
+    <md-button ng-click="action()">
+        Close
+    </md-button>
+</md-toast>

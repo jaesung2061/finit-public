@@ -1,0 +1,10 @@
+<md-toolbar class="Validation md-padding" layout="row" ng-show="errors">
+    <ul flex>
+        <li ng-repeat="error in errors">
+            {{error[0]}}
+        </li>
+    </ul>
+    <button type="button" class="close" ng-click="close()">
+        <span>×</span>
+    </button>
+</md-toolbar>

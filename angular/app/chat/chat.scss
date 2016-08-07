@@ -1,0 +1,53 @@
+.Page-Container.Chat {
+    md-list-item > .md-avatar:first-child,
+    md-list-item .md-list-item-inner > .md-avatar:first-child {
+        width: 50px;
+        height: 50px;
+    }
+    #announcement {
+        margin-bottom: 1em;
+    }
+    .sidenav {
+        font-size: 17px;
+        list-style: none;
+        padding: 0;
+        li {
+            a {
+                display: block;
+                padding: 8px 16px;
+                &:hover {
+                    background-color: rgba(#000, .15);
+                }
+            }
+        }
+    }
+    .active-chatrooms {
+        .active-chatroom {
+            text-align: center;
+            padding: 4px;
+            &:hover {
+                background-color: rgba(#000, .1);
+            }
+            h4 {
+                margin-bottom: 0;
+            }
+            p {
+                overflow: hidden;
+                max-width: 100%;
+            }
+            > a {
+                display: block;
+                margin: 0 auto;
+                width: 128px;
+                max-width: 100%;
+                img {
+                    width: 100%;
+                    border: 1px solid #ccc;
+                }
+            }
+            &.current-users-chatroom {
+                border: 2px solid #2196F3;
+            }
+        }
+    }
+}

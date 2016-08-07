@@ -1,0 +1,10 @@
+<div class="Page-Container" ng-controller="BugReportsController">
+    <h3>Bug Reports</h3>
+    <md-list>
+        <md-list-item ng-repeat="bugReport in bugReports">
+            <div class="md-list-item-text">
+                <h4>{{bugReport.body}}</h4>
+            </div>
+        </md-list-item>
+    </md-list>
+</div>

@@ -1,0 +1,25 @@
+<md-dialog ng-controller="SelectPhotoController">
+    <form ng-submit="save()">
+        <md-dialog-content>
+            <h2 class="md-title" ngf-select ngf-change="onFileSelect($files)" accept="image/*" ng-hide="sourceImage">Select photo</h2>
+
+            <canvas width="300"
+                    height="300"
+                    image-cropper
+                    image="sourceImage"
+                    cropped-image="croppedImage"
+                    crop-width="cropWidth"
+                    crop-height="cropHeight"
+                    keep-aspect="true"
+                    touch-radius="30"
+                    crop-area-bounds="bounds"
+                    ng-click="$event.stopPropagation()"></canvas>
+
+        </md-dialog-content>
+
+        <div class="md-actions" layout="row">
+            <md-button type="button" ng-click="hide()">Cancel</md-button>
+            <md-button class="md-primary md-raised" type="submit">Save</md-button>
+        </div>
+    </form>
+</md-dialog>

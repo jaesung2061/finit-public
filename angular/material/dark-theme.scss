@@ -1,0 +1,78 @@
+body.dark-theme-enabled .Page-Container.Chat-App {
+    md-content.md-default-theme,
+    div.md-default-theme {
+        background-color: #303030;
+    }
+
+    md-list-item.me {
+        background-color: #202020 !important;
+    }
+
+    md-list-item.me:hover {
+        background-color: #262626 !important;
+    }
+
+    * {
+        color: #eee !important;
+    }
+
+    .Bottom-Sheet.Emojis button:not(.md-raised) span,
+    .Bottom-Sheet.Emojis button:not(.md-raised) .fa {
+        color: #333 !important;
+    }
+
+    input {
+        color: #000 !important;
+    }
+
+    .md-off {
+        border-color: #c0c0c0 !important;
+    }
+
+    .fa-arrow-left {
+        color: black !important;
+    }
+
+    .fa-arrow-right {
+        color: black !important;
+    }
+
+    .is-mod {
+        color: #448AFF /*rgb(124,77,255)*/
+        !important;
+    }
+
+    .box-content {
+        color: black !important;
+    }
+
+    .md-open-menu-container md-menu-item button {
+        color: black !important;
+    }
+
+    label[for=input_1] {
+        color: black !important;
+    }
+
+    textarea#input_1 {
+        color: black !important;
+    }
+
+    .is-admin {
+        color: gold !important;
+    }
+
+    md-list-item > button:hover {
+        background-color: rgba(#fff, .2);
+    }
+
+    input.poll-option {
+        color: #fff !important;
+    }
+
+    #chat-message-input {
+        border-top-color: #999;
+        background-color: #333!important;
+        color: #eee!important;
+    }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "laravel5-angular-material-starter",
+  "authors": [
+    "Jad Joubran <jad@jadjoubran.com>"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4",
+    "angular-facebook": "~0.2.3",
+    "angular-ui-router": "~0.2.15",
+    "ngstorage": "~0.3.3",
+    "angular-material": "~0.10.1",
+    "restangular": "~1.5.1",
+    "svg-morpheus": "~0.1.8",
+    "angular-material-icons": "~0.5.0",
+    "satellizer": "~0.11.2",
+    "angular-loading-bar": "~0.8.0",
+    "angular-perfect-scrollbar": "~0.0.4",
+    "isotope-packery": "~1.1.3",
+    "animate.css": "~3.4.0",
+    "angular-scroll-glue": "~2.0.6",
+    "ng-file-upload": "~10.0.2",
+    "angular-img-cropper": "~1.1.0",
+    "fastclick": "~1.0.6",
+    "js-emoji": "~1.0.0",
+    "angulartics-google-analytics": "~0.1.3",
+    "angulartics": "~1.0.2",
+    "ng-showdown": "^1.1.0"
+  }
+}

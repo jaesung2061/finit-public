@@ -1,0 +1,199 @@
+<md-dialog class="Dialog chatroom-edit md-dialog-fullscreen" flex layout="column">
+    <md-dialog-content>
+        <h2 class="md-title text-center">
+            Moderator Dashboard ({{chatroom.title}})
+            <button class="close" ng-click="hide()"><i class="fa fa-times"></i></button>
+        </h2>
+        <md-tabs md-dynamic-height="true">
+            <!--DESCRIPTION-->
+            <md-tab ng-if="chatroom.owner_id === currentUser.id || currentUser.id === 1">
+                <md-tab-label>
+                    Info
+                </md-tab-label>
+                <md-content layout-padding>
+                    <form ng-submit="updateChatInfo()">
+                        <div>
+                            <h4 class="text-center">Chatroom image</h4>
+
+                            <img-crop crop-options="cropOptions" ng-if="cropperReady"></img-crop>
+
+                            <!--Placeholder-->
+                            <div class="image-cropper" ng-hide="cropperReady">
+                                <div class="crop-placeholder">
+                                    <h1>
+                                        <i class="fa fa-picture-o"></i>
+                                    </h1>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <p>Result image will be 128x128.</p>
+                                <md-button ngf-select ngf-change="onFileSelect($files)" accept="image/*" class="md-raised md-accent" ng-class="{selected: !!cropOptions.croppedImage}">
+                                    <i class="fa fa-camera"></i> Select
+                                </md-button>
+                                <md-button class="md-raised md-primary" type="button" ng-click="uploadPhoto()">
+                                    <i class="fa fa-check"></i> Upload
+                                </md-button>
+                            </div>
+                        </div>
+
+                        <md-input-container>
+                            <label>Tab Title (no markdown, text only)</label>
+                            <textarea ng-model="formData.tab_title" md-maxlength="100" maxlength="100"></textarea>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label>Short description (no markdown, text only)</label>
+                            <textarea ng-model="formData.description_short" md-maxlength="150" maxlength="150"></textarea>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label>Description</label>
+                            <textarea ng-model="formData.description" md-maxlength="4096" maxlength="4096"></textarea>
+                        </md-input-container>
+
+                        <div collapse="collapseMarkdownHelp">
+                            <h4>Formatting help</h4>
+
+                            <table class="table">
+                                <tr>
+                                    <td>### Header</td>
+                                    <td><h3>Header</h3></td>
+                                </tr>
+                                <tr>
+                                    <td>**Bold**<br>*Italics*</td>
+                                    <td><strong>Bold</strong><br><i>*Italics*</i></td>
+                                </tr>
+                                <tr>
+                                    <td>[Finit](https://finit.co)</td>
+                                    <td><a href="https://finit.co">Finit</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Full markdown help
+                                        <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">here</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="md-actions" layout="row" flex="10">
+                            <md-button type="button" ng-click="collapseMarkdownHelp = !collapseMarkdownHelp">Formatting help</md-button>
+                            <md-button class="md-primary md-raised" type="submit">Save</md-button>
+                        </div>
+                    </form>
+                </md-content>
+            </md-tab>
+
+            <!--BANS-->
+            <md-tab>
+                <md-tab-label>Users</md-tab-label>
+                <md-content layout-padding layout="row" layout-wrap>
+                    <div flex="50" flex-sm="100">
+                        <h4>Banned users</h4>
+
+                        <p>Check users you wish to unban.</p>
+
+                        <md-list>
+                            <md-list-item ng-if="bans.length === 0">
+                                <p>No banned users.</p>
+                            </md-list-item>
+                            <md-list-item class="secondary-button-padding" style="position: relative;" ng-repeat="ban in bans">
+                                <p>{{ban.user.username}}</p>
+                                <md-checkbox ng-model="ban.unban"></md-checkbox>
+                            </md-list-item>
+                        </md-list>
+
+                        <div class="text-right">
+                            <md-button class="md-raised md-accent" ng-click="unbanUsers()">Unban</md-button>
+                        </div>
+                    </div>
+                    <form ng-submit="banUser()" flex="50" flex-sm="100">
+                        <h4>Ban a user</h4>
+
+                        <md-input-container>
+                            <label>Username to ban</label>
+                            <input type="text" ng-model="banFormData.username">
+                        </md-input-container>
+
+                        <div class="text-right">
+                            <md-button class="md-raised md-warn" type="submit">Ban</md-button>
+                        </div>
+                    </form>
+                </md-content>
+            </md-tab>
+
+            <!--MODS-->
+            <md-tab ng-if="chatroom.owner_id === currentUser.id || currentUser.id === 1">
+                <md-tab-label>Mods</md-tab-label>
+                <md-content layout="row" layout-padding>
+                    <div flex="50" flex-sm="100">
+                        <h4>Current Mods</h4>
+
+                        <md-list>
+                            <md-list-item class="secondary-button-padding" style="position: relative;" ng-repeat="mod in mods">
+                                <p>{{mod.user.username}}</p>
+                                <md-checkbox ng-model="mod.demod"></md-checkbox>
+                            </md-list-item>
+                        </md-list>
+
+                        <div class="text-right">
+                            <md-button class="md-raised md-warn" ng-click="demodUsers()">Demod</md-button>
+                        </div>
+                    </div>
+                    <form ng-submit="modUser(chatroom)" flex="50" flex-sm="100">
+                        <h4>Promote to mod.</h4>
+
+                        <md-input-container>
+                            <label>Username to promote</label>
+                            <input type="text" ng-model="modFormData.username">
+                        </md-input-container>
+
+                        <div class="text-right">
+                            <md-button class="md-raised md-accent">Promote</md-button>
+                        </div>
+                    </form>
+                </md-content>
+            </md-tab>
+
+            <!--SETTINGS-->
+            <md-tab>
+                <md-tab-label>Settings</md-tab-label>
+                <md-content layout-padding>
+                    <h4>Modes: </h4>
+                    <p>Set a mode for the chatroom to impose restrictions on who can talk.</p>
+                    <md-radio-group ng-model="formData.settings.mode">
+                        <md-radio-button value="all">All - Any user can send messages.</md-radio-button>
+                        <md-radio-button value="mods">Mods - Only mods can send messages.</md-radio-button>
+                        <md-radio-button value="regulars">Regulars* - Only mods and users tagged as a regular can send messages.</md-radio-button>
+                        <md-radio-button value="registered">Registered - All users except guests can send messages.</md-radio-button>
+                    </md-radio-group>
+
+                    <p>
+                        *: To tag a user as a regular, type "/reg &lt;USERNAME&gt;" without the quotes and greater/less than signs.<br>
+                        *: To untag a user as a regular, type "/dereg &lt;USERNAME&gt;"
+                    </p>
+                </md-content>
+            </md-tab>
+
+            <!--MODMAIL-->
+            <md-tab>
+                <md-tab-label>Mail</md-tab-label>
+                <md-content layout-padding>
+                    Coming soon.
+                </md-content>
+            </md-tab>
+
+            <!--DISCLAIM HASHTAG-->
+            <md-tab ng-if="chatroom.owner_id === currentUser.id || currentUser.id === 1">
+                <md-tab-label>Disclaim hashtag</md-tab-label>
+                <md-content class="text-center" style="padding-top: 50px;">
+                    <md-button class="md-raised md-warn" ng-click="disclaimHashtag(chatroom)">
+                        <i class="fa fa-times"></i>
+                        Disclaim ownership of hashtag
+                    </md-button>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+</md-dialog>

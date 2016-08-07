@@ -1,0 +1,36 @@
+<div class="friendship-buttons text-center" ng-show="currentUser && !currentUser.is_temp && !user.is_temp">
+    <md-button class="md-raised md-accent" ng-if="!isFriend && !friendRequestSent && !friendRequestReceived && !isSelf" ng-click="sendRequest(user.id)">
+        <i class="fa fa-plus"></i> Add
+    </md-button>
+
+    <div ng-if="friendRequestReceived">
+        <p>You received a request from @{{user.username}}</p>
+
+        <md-button class="md-raised md-accent" ng-click="acceptRequest(user.id)">
+            <i class="fa fa-check"></i>
+        </md-button>
+        <md-button class="md-raised md-warn" ng-click="declineRequest(user.id)">
+            <i class="fa fa-times"></i>
+        </md-button>
+    </div>
+
+    <md-button class="md-raised md-warn" ng-if="friendRequestSent" ng-click="cancelRequest(user.id)">
+        <i class="fa fa-minus"></i> Cancel Request
+    </md-button>
+</div>
+
+<div ng-show="currentUser.is_temp && !isSelf" class="text-center">
+    <p>
+        To add this user as a friend,
+        <br>
+        <a href ng-click="openDialog('create-account')">create an account</a>.
+    </p>
+</div>
+
+<div ng-show="currentUser.is_temp && isSelf" class="text-center">
+    <p>
+        Claim this page,
+        <br>
+        <a href ng-click="openDialog('create-account')">create an account</a>.
+    </p>
+</div>
